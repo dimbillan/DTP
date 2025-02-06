@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, abort
 from flask_login import login_required, current_user
-from dtp.models import Student, Announcement
+from dtp.models import Student, Announcement, Lecture
 from dtp.admin.forms import AnnouncementForm
 from dtp import db
 
@@ -98,3 +98,21 @@ def delete_announcement(id):
         flash(f"{announcement.title} başlıklı duyuru kaldırıldı.", 'info')
 
     return redirect(url_for('admin.admin_panel'))
+
+@admin.route('/lectures', methods=['GET', 'POST'])
+@login_required
+def lectures():
+    lectures = Lecture.query.all()
+
+    return render_template('lectures.html', lectures = lectures)
+
+@admin.route('/delete_lecture/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_lecture(id):
+    lecture = Lecture.query.get_or_404(id)
+    if not lecture:
+        flash("Bir hata oluştu", "danger")
+    else:
+        db.session.delete(lecture)
+        db.session.commit()
+    return redirect(url_for('admin.lectures'))
