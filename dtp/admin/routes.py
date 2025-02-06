@@ -45,6 +45,19 @@ def take_perm(id):
 
     return redirect(url_for('admin.admin_panel'))
 
+
+@admin.route('/delete_student/<int:id>', methods=['POST'])
+def delete_student(id):
+    student = Student.query.get(id)
+
+    if student:
+        db.session.delete(student)
+        db.session.commit()
+
+        flash(f"ID'si {student.id} olan {student.name} adlı öğrenci silindi.", 'info')
+
+    return redirect(url_for('admin.students'))
+
 @admin.route('/announcement', methods=['GET', 'POST'])
 @login_required
 def announcement():
