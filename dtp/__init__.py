@@ -35,7 +35,7 @@ from dtp.models import Student, Lecture, Unattendance
 @app.context_processor
 def inject_to_base():
 
-    folder_path = "dtp\\static\\docs"
+    folder_path = os.path.join('dtp', 'static', 'docs')
 
     file_count = len([f for f in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, f))])
 
