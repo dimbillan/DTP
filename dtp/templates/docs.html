@@ -64,7 +64,7 @@
                         Belgeyi İndir
                     </a>
                     {% if current_user.is_admin == True %}
-                    <a href="{{ url_for('docs.delete_file', filename='docs/' + doc) }}" download class="btn btn-primary mt-2">
+                    <a href="{{ url_for('docs.delete_file', filename = doc) }}" class="btn btn-danger mt-2">
                         Sil
                     </a>
                     {% endif %}

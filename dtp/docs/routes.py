@@ -40,11 +40,11 @@ def docs_list():
         return render_template('docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
     return render_template('docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q)
 
-@docs.route('/docs/delete/<str:filename>', methods=['GET', 'POST'])
+@docs.route('/docs/delete/<string:filename>', methods=['GET', 'POST'])
 @login_required
 def delete_file(filename):
     if current_user.is_admin:
-        file_path = os.path.join('dtp','static','docs', filename)
+        file_path = os.path.join("dtp","static","docs",filename)
         if os.path.exists(file_path):
             try:
                 os.remove(file_path)
@@ -56,5 +56,5 @@ def delete_file(filename):
     else:
         flash("Bu işlemi gerçekleştirmek için yetkiniz yok.", "danger")
     
-    return redirect(url_for('docs.index'))
+    return redirect('/docs')
 
