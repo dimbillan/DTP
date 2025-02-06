@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section py-5">
+    <div class="container">
+        <div class="card shadow-sm p-4">
+            <h2 class="card-title mb-4 text-center">Öğrenci Bilgileri</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Öğrenci ID:</strong>
+                </div>
+                <div class="col-md-8">
+                    <p>{{ student.id }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Öğrenci E-Posta:</strong>
+                </div>
+                <div class="col-md-8">
+                    <p>{{ student.email }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Öğrenci Adı:</strong>
+                </div>
+                <div class="col-md-8">
+                    <p>{{ student.name }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <strong>Yetki:</strong>
+                </div>
+                <div class="col-md-8">
+                    {% if student.is_admin == False %}
+                    <p>Öğrenci</p>
+                    {% else %}
+                    <p>Admin</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

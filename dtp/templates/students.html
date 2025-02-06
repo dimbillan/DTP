@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Öğrenci ID</th>
+        <th>Öğrenci Adı</th>
+        <th>E-Posta</th>
+        <th>Admin mi?</th>
+        <th>İşlem</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if students %}
+    {% for student in students %}
+    <tr>
+        <td>{{ student.id }}</td>
+        <td>{{ student.name }}</td>
+        <td>{{ student.email }}</td>
+        <td>{{ student.is_admin }}</td>
+        <td>
+            {% if student.is_admin == False %}
+            <form action="{{ url_for('admin.give_perm', id=student.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm">Admin Yap</button>
+            </form>
+            {% else %}
+            <form action="{{ url_for('admin.take_perm', id=student.id) }}" method="POST">
+                <button type="submit" class="btn btn-danger btn-sm">Adminliği Al</button>
+            </form>
+            {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="5">Öğrenci kaydı bulunamadı.</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+{% endblock content %}

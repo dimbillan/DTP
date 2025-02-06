@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form_announcement.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Duyuru Ekle</legend>
+            <div class="form-group">
+                {% if form_announcement.title.errors %}
+                    {{ form_announcement.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form_announcement.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form_announcement.title(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                    {{ form_announcement.content(class="form-control form-control-lg") }}    
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form_announcement.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
