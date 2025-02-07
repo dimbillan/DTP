@@ -1,6 +1,6 @@
 instance/
 migrations/
-__pycache__/
+**__pycache__/
 __pypackages__/
 .env
 .venv/
