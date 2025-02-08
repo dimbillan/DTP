@@ -9,7 +9,7 @@ admin = Blueprint('admin', __name__, url_prefix='/admin')
 @admin.route('/', methods=['GET', 'POST'])
 @login_required
 def admin_panel():
-    if current_user.is_admin or current_user.email == "admin@dtp.com":
+    if current_user.is_admin:
         return render_template('admin.html', title='Admin Panel')
     
     else:

@@ -20,6 +20,8 @@
         <td>{{ student.email }}</td>
         <td>{{ student.is_admin }}</td>
         <td>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+          <div>
             {% if student.is_admin == False %}
             <form action="{{ url_for('admin.give_perm', id=student.id) }}" method="POST">
                 <button type="submit" class="btn btn-danger btn-sm">Admin Yap</button>
@@ -29,9 +31,13 @@
                 <button type="submit" class="btn btn-danger btn-sm">Adminliği Al</button>
             </form>
             {% endif %}
+          </div>
+          <div>
             <form action="{{ url_for('admin.delete_student', id=student.id) }}" method="POST">
               <button type="submit" class="btn btn-danger btn-sm">Öğrenciyi Sil</button>
-          </form>
+            </form>
+          </div>
+          </div>
         </td>
       </tr>
       {% endif %}
