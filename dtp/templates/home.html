@@ -1,5 +1,38 @@
-{% extends "base.html" %}
+{% extends "layout/base.html" %}
 {% block content %}
+<div class="content-section">
+<legend> Son Devamsızlıklar</legend>
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Ders Adı</th>
+      <th>Hafta</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% if unattendances%}
+  {% for unattendance in unattendances %}
+  <tr>
+      <td>{{ unattendance.lecture.name }}</td>
+      <td>{{ unattendance.week_id}}. Hafta</td>
+    </tr>
+  {% endfor %}
+  {% else %}
+  {% if current_user.is_authenticated %}
+  <tr>
+      <td colspan="2">Devamsızlık kaydı bulunamadı.</td>
+  </tr>
+  {% else %}
+  <tr>
+    <td colspan="2">Bunu görmek için lütfen giriş yapın.</td>
+  </tr>
+  {% endif %}
+  {% endif %}
+  </tbody>
+</table>
+</div>
+<div class="content-section">
 {% if announcements %}
 {% for announce in announcements %}
 <div class="media mb-4 p-3 border rounded shadow-sm">
@@ -22,4 +55,5 @@
   </div>
 </div>
 {% endif %}
+</div>
 {% endblock content %}

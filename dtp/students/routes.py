@@ -4,7 +4,7 @@ from sqlalchemy.orm import joinedload
 
 from dtp import db, bcrypt
 from dtp.models import Student, Weeks, Unattendance, Lecture
-from dtp.students.forms import LoginForm, RegisterForm, RequestResetForm, ResetPasswordForm, GetUnattendancesForm, UpdateUnattendancesForm, AddLecture
+from dtp.students.forms import LoginForm, RegisterForm, GetUnattendancesForm, UpdateUnattendancesForm
 from dtp.students.utils import *
 
 students = Blueprint('students', __name__)
@@ -22,7 +22,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash('Giriş Başarısız. Öğrenci numaranızı ve şifrenizi kontrol edin.', 'danger')
-    return render_template('login.html', title='Giriş Yap', form=form)
+    return render_template('auth/login.html', title='Giriş Yap', form=form)
 
 @students.route("/register", methods=['GET', 'POST'])
 def register():
@@ -36,11 +36,11 @@ def register():
         db.session.commit()
         flash('Hesabınız oluşturuldu. Artık giriş yapabilirsiniz', 'success')
         return redirect(url_for('students.login'))
-    return render_template('register.html', title='Kayıt Ol', form=form)
+    return render_template('auth/register.html', title='Kayıt Ol', form=form)
 
 @students.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
-    return render_template('reset_request.html')
+    return render_template('auth/reset_request.html')
 
 @students.route('/logout', methods=['GET', 'POST'])  
 @login_required
@@ -87,7 +87,7 @@ def unattendance():
         lecture_id = form_get.lecture.data
         unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
 
-    return render_template('unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update = form_update, unattendances=unattendances)
+    return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update = form_update, unattendances=unattendances)
     
 @students.route('/delete/<int:id>', methods=['POST'])
 def delete_unattendance(id):
@@ -102,21 +102,7 @@ def delete_unattendance(id):
 @students.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', title='Profil', student=current_user)
-
-@students.route('/add_lecture', methods=['GET', 'POST'])
-@login_required
-def add_lecture():
-    form_add_lecture = AddLecture()
-
-    if form_add_lecture.validate_on_submit():
-        new_lecture = Lecture(name=form_add_lecture.lecture_name.data, code = form_add_lecture.lecture_code.data)
-        db.session.add(new_lecture)
-        db.session.commit()
-        flash(f'{new_lecture.name} dersi {new_lecture.code} koduyla başarıyla eklendi', 'success')
-        return redirect(url_for('students.unattendance'))
-    
-    return render_template('add_lecture.html', title='Ders Ekle', form_add = form_add_lecture)
+    return render_template('students/profile.html', title='Profil', student=current_user)
 
 #    if form.validate_on_submit():
 #        student = Student.query.filter_by(email=form.email.data).first()
@@ -124,7 +110,7 @@ def add_lecture():
 #        flash("Şifre sıfırlama linki gönderildi", "info")
 #        return redirect(url_for("login"))
 
-#   return render_template('reset_request.html', title='Şifreni Sıfırla', form=form)
+#   return render_template('auth/reset_request.html', title='Şifreni Sıfırla', form=form)
 
 #@students.route("/reset_password/<token>", methods=['GET', 'POST'])
 #def reset_token(token):
@@ -140,4 +126,4 @@ def add_lecture():
 #            db.session.commit()
 #            flash('Şifreniz başarıyla değiştirildi.', 'success')
 #            return redirect(url_for('students.login'))
-#    return render_template('reset_token.html', title='Şifreni Sıfırla', form=form)
+#    return render_template('auth/reset_token.html', title='Şifreni Sıfırla', form=form)

@@ -14,7 +14,7 @@ class Student(db.Model, UserMixin):
     email = db.Column(db.String(128), nullable=False, unique=True)
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(256), nullable=False)
-    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Integer, nullable=False, default=1)
 
     def __repr__(self):
         return f"Student ('{self.email}', '{self.name}', '{self.is_admin}')"

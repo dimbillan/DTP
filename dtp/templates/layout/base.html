@@ -24,9 +24,6 @@
               <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Ana Sayfa</a>
               <a class="nav-item nav-link" href="{{ url_for('students.unattendance') }}">Devamsızlık</a>
               <!--- <a class="nav-item nav-link" href="{{ url_for('docs.docs_list') }}">Belgeler</a> --->
-              {% if current_user.is_admin %}
-              <a class="nav-item nav-link" href="{{ url_for('students.add_lecture') }}">Ders Ekle</a>
-              {% endif %}
             </div>
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}

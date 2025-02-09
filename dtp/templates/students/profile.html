@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout/base.html" %}
 {% block content %}
 <div class="content-section py-5">
     <div class="container">
@@ -30,13 +30,11 @@
             </div>
             <div class="row">
                 <div class="col-md-4">
-                    <strong>Yetki:</strong>
+                    <strong>Yetki Seviyesi:</strong>
                 </div>
                 <div class="col-md-8">
-                    {% if student.is_admin == False %}
-                    <p>Öğrenci</p>
-                    {% else %}
-                    <p>Admin</p>
+                    {% if student.is_admin >= 1%}
+                    <p>{{ student.is_admin }}</p>
                     {% endif %}
                 </div>
             </div>

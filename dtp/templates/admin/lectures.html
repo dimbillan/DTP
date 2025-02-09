@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "layout/base.html" %}
 {% block content %}
 
 <table class="table table-bordered table-striped">
@@ -31,4 +31,8 @@
     {% endif %}
     </tbody>
 </table>
+
+<div class="btn">
+<a href="{{ url_for('admin.add_lecture')}}">Ders Ekle</a>
+</div>
 {% endblock content %}

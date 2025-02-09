@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from dtp.models import Student, Announcement, Lecture
-from dtp.admin.forms import AnnouncementForm
+from dtp.admin.forms import AnnouncementForm, AddLecture
 from dtp import db
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -10,7 +10,7 @@ admin = Blueprint('admin', __name__, url_prefix='/admin')
 @login_required
 def admin_panel():
     if current_user.is_admin:
-        return render_template('admin.html', title='Admin Panel')
+        return render_template('admin/admin.html', title='Admin Panel')
     
     else:
         return redirect(url_for('main.home'))
@@ -19,7 +19,7 @@ def admin_panel():
 @login_required
 def students():
     students = Student.query.all()
-    return render_template('students.html', students = students)
+    return render_template('admin/students.html', students = students)
 
 @admin.route('/give_perm/<int:id>', methods=['POST'])
 def give_perm(id):
@@ -80,7 +80,7 @@ def new_announcement():
 
         return redirect(url_for('admin.announcement'))
     
-    return render_template('add_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
+    return render_template('admin/add_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
 
 @admin.route('/announcement/update/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -98,7 +98,7 @@ def update_announcement(id):
 
         return redirect(url_for('admin.announcement'))
     
-    return render_template('update_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
+    return render_template('admin/update_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
 
 @admin.route('/announcement/delete/<int:id>', methods=['POST'])
 def delete_announcement(id):
@@ -117,7 +117,7 @@ def delete_announcement(id):
 def lectures():
     lectures = Lecture.query.all()
 
-    return render_template('lectures.html', lectures = lectures)
+    return render_template('admin/lectures.html', lectures = lectures)
 
 @admin.route('/delete_lecture/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -128,4 +128,23 @@ def delete_lecture(id):
     else:
         db.session.delete(lecture)
         db.session.commit()
+
+        flash(f"{lecture.name} dersi silindi.", "info")
+
     return redirect(url_for('admin.lectures'))
+
+@admin.route('/add_lecture', methods=['GET', 'POST'])
+@login_required
+def add_lecture():
+    form_add = AddLecture()
+    if form_add.validate_on_submit():
+        new_lecture = Lecture(name=form_add.lecture_name.data, code = form_add.lecture_code.data)
+        
+        db.session.add(new_lecture)
+        db.session.commit()
+        
+        flash(f"{form_add.lecture_name.data} dersi {form_add.lecture_code.data} koduyla eklendi.", "success")
+
+        return redirect(url_for("admin.lectures"))
+
+    return render_template("admin/add_lecture.html", form_add=form_add)
