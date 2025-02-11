@@ -48,10 +48,30 @@ def logout():
     logout_user()
     return redirect(url_for('students.login'))
 
+@students.route('/profile')
+@login_required
+def profile():
+    return render_template('students/profile.html', title='Profil', student=current_user)
+#----------------------------------------------------------#
 @students.route('/unattendance', methods=['GET', 'POST'])
 @login_required
 def unattendance():
     form_get = GetUnattendancesForm()
+    lectures = Lecture.query.all()
+
+    form_get.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures]
+
+    unattendances = None
+    
+    if form_get.validate_on_submit():
+        lecture_id = form_get.lecture.data
+        unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
+
+    return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, unattendances=unattendances)
+
+@students.route('/unattendance/new/', methods=['GET', 'POST'])
+@login_required
+def unattendance_new():
     form_update = UpdateUnattendancesForm()
 
     lectures = Lecture.query.all()
@@ -59,10 +79,6 @@ def unattendance():
 
     form_update.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures] 
     form_update.week.choices= [(week.id, week.week_name) for week in weeks]
-
-    form_get.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures]
-
-    unattendances = None
 
     if form_update.validate_on_submit():
         lecture_id = form_update.lecture.data
@@ -82,14 +98,10 @@ def unattendance():
 
             flash(f'Devamsızlık kaydı {new_unattendance.lecture.name} dersi için {week_id}. haftaya eklendi', 'success')
             return redirect(url_for('students.unattendance'))
-    
-    if form_get.validate_on_submit():
-        lecture_id = form_get.lecture.data
-        unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
+        
+    return render_template('students/add_unattendances.html', form_update= form_update)
 
-    return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update = form_update, unattendances=unattendances)
-    
-@students.route('/delete/<int:id>', methods=['POST'])
+@students.route('/unattendance/delete/<int:id>', methods=['POST'])
 def delete_unattendance(id):
     devamsizlik = Unattendance.query.options(joinedload(Unattendance.lecture)).get(id)
 
@@ -99,10 +111,6 @@ def delete_unattendance(id):
         flash(f'Devamsızlık kaydı {devamsizlik.lecture.name} dersi için {devamsizlik.week_id}. haftadan silindi', 'info')
     return redirect(url_for('students.unattendance'))
 
-@students.route('/profile')
-@login_required
-def profile():
-    return render_template('students/profile.html', title='Profil', student=current_user)
 
 #    if form.validate_on_submit():
 #        student = Student.query.filter_by(email=form.email.data).first()

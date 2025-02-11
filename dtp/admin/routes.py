@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
+
 from dtp.models import Student, Announcement, Lecture
 from dtp.admin.forms import AnnouncementForm, AddLecture
+
 from dtp import db
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -9,7 +11,7 @@ admin = Blueprint('admin', __name__, url_prefix='/admin')
 @admin.route('/', methods=['GET', 'POST'])
 @login_required
 def admin_panel():
-    if current_user.is_admin:
+    if current_user.is_admin > 500:
         return render_template('admin/admin.html', title='Admin Panel')
     
     else:
@@ -44,7 +46,6 @@ def take_perm(id):
         flash(f"ID'si {student.id} olan {student.name} adlı öğrencinin ADMIN yetkileri kaldırıldı.", 'info')
 
     return redirect(url_for('admin.admin_panel'))
-
 
 @admin.route('/delete_student/<int:id>', methods=['POST'])
 def delete_student(id):

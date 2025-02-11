@@ -23,7 +23,7 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Ana Sayfa</a>
               <a class="nav-item nav-link" href="{{ url_for('students.unattendance') }}">Devamsızlık</a>
-              <!--- <a class="nav-item nav-link" href="{{ url_for('docs.docs_list') }}">Belgeler</a> --->
+              <a class="nav-item nav-link" href="{{ url_for('docs.docs_list') }}">Belgeler</a>
             </div>
             <div class="navbar-nav">
               {% if current_user.is_authenticated %}
@@ -61,7 +61,7 @@
                 <li class="list-group-item list-group-item-light"><strong>Kaydedilen Devamsızlık Sayısı: </strong>{{ total_unattendances }}</li>
                 <li class="list-group-item list-group-item-light"><strong>Eklenen Ders Sayısı: </strong>{{ total_lectures }}</li>
                 <li class="list-group-item list-group-item-light"><strong>Eklenen Belge Sayısı: </strong>{{ total_files }}</li>
-                <li class="list-group-item list-group-item-light"><a href="{{ url_for('admin.admin_panel')}}">Yönetim</a></li>
+                <li class="list-group-item list-group-item-light"><a href=" url_for('admin.admin_panel')">Yönetim</a></li>
               </ul>
           </div>
         </div>

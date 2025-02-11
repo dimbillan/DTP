@@ -61,7 +61,6 @@ class UpdateUnattendancesForm(FlaskForm):
 
     def validate_attendance(self, week):
         attendance = Unattendance.query.filter_by(week_id=week.data).first()
-        print(attendance)
         if attendance:
             raise ValidationError('Bu numara daha önce alınmış. Lütfen başka bir numara seçin')
         
