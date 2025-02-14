@@ -64,7 +64,7 @@ def delete_student(id):
 def announcement():
     announcements = Announcement.query.all()
 
-    return render_template('announcement.html', announcements = announcements[::-1])
+    return render_template('admin/announcement.html', announcements = announcements[::-1])
 
 @admin.route('/announcement/new', methods=['GET', 'POST'])
 @login_required
