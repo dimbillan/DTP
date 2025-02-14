@@ -19,6 +19,7 @@ def login():
         if student and bcrypt.check_password_hash(student.password, form.password.data):
             login_user(student)
             next_page = request.args.get('next')
+            print(f"{student.email} {request.remote_addr} adresiyle giriş yaptı.")
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash('Giriş Başarısız. Öğrenci numaranızı ve şifrenizi kontrol edin.', 'danger')
@@ -46,6 +47,7 @@ def reset_request():
 @login_required
 def logout():
     logout_user()
+    print(f"{current_user.email} çıkış yaptı.")
     return redirect(url_for('students.login'))
 
 @students.route('/profile')

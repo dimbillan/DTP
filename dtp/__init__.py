@@ -12,7 +12,7 @@ from dtp.config import Config
 app = Flask(__name__)
 
 app.config.from_object(Config)
-print(Config.SQLALCHEMY_DATABASE_URI)
+#print(Config.SQLALCHEMY_DATABASE_URI)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
