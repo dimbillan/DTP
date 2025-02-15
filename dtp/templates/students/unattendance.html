@@ -1,59 +1,93 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section text-center">
-<div class="form-group">
-    <a href="{{ url_for('students.unattendance_new')}}" class="btn btn-outline-info d-block">Devamsızlık Ekle</a>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form_update.hidden_tag() }}
+        <fieldset class="mb-4">
+            <legend class="border-bottom mb-4">Devamsızlık Ekle</legend>
+            <div class="mb-3">
+                {% if form_update.lecture.errors %}
+                    {{ form_update.lecture(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form_update.lecture.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form_update.lecture(class="form-control") }}
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                {{ form_update.week(class="form-control") }}    
+            </div>
+        </fieldset>
+        <div class="d-flex gap-2">
+            {{ form_update.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
 </div>
-</div>
+
 <div class="content-section">
     <form method="POST" action="">
         {{ form_get.hidden_tag() }}
-        <fieldset class="form-group">
+        <fieldset class="mb-4">
             <legend class="border-bottom mb-4">Devamsızlık Sorgula</legend>
-            <div class="form-group">
+            <div class="mb-3">
                 {% if form_get.lecture.errors %}
-                    {{ form_get.lecture(class="form-control form-control-lg is-invalid") }}
+                    {{ form_get.lecture(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form_get.lecture.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form_get.lecture(class="form-control form-control-lg") }}
+                    {{ form_get.lecture(class="form-control") }}
                 {% endif %}
             </div>
         </fieldset>
-        <div class="form-group">
+        <div class="d-flex gap-2">
             {{ form_get.submit(class="btn btn-outline-info") }}
         </div>
     </form>
 </div>
-<table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>Ders Adı</th>
-            <th>Hafta</th>
-            <th>İşlem</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% if unattendances %}
-        {% for unattendance in unattendances %}
-        <tr>
-            <td>{{ unattendance.lecture.name }}</td>
-            <td>{{ unattendance.week_id}}. Hafta</td>
-            <td>
-                <form action="{{ url_for('students.delete_unattendance', id=unattendance.id) }}" method="POST">
-                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
-                </form>
-            </td>
-          </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">Devamsızlık kaydı bulunamadı.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-</table>
+
+<div class="content-section">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-striped shadow-sm rounded">
+            <thead class="table-light">
+                <tr>
+                    <th>Ders Adı</th>
+                    <th>Hafta</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if unattendances %}
+                    {% for unattendance in unattendances %}
+                        <tr>
+                            <td>{{ unattendance.lecture.name }}</td>
+                            <td>{{ unattendance.week_id }}. Hafta</td>
+                            <td>
+                                <form action="{{ url_for('students.delete_unattendance', id=unattendance.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    {% if current_user.is_authenticated %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Devamsızlık kaydı bulunamadı.</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Bunu görmek için lütfen giriş yapın.</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock content %}

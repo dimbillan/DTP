@@ -50,16 +50,14 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('student.id', ondelete="SET NULL"), nullable=True)
     title = db.Column(db.String(64), nullable=False)
-    content = db.Column(db.String(256), nullable=False)  # İçeriği biraz daha uzun yapalım
-    date_posted = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(pytz.timezone("Europe/Istanbul")))
+    content = db.Column(db.String(64), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now(pytz.timezone("Europe/Istanbul")).astimezone(pytz.utc))
     author = db.relationship('Student', backref='announcements')
-
     def __repr__(self):
         return f"Announcement ('{self.author_id}', '{self.title}', '{self.content}', '{self.date_posted}')"
-
-# Öğrenci silindiğinde author_id'yi -1 olarak güncelle
-@event.listens_for(db.session, "before_flush")
-def prevent_null_author(session, flush_context, instances):
-    for instance in session.new.union(session.dirty):  # Yeni ve değişen objeleri kontrol et
+    
+@event.listens_for(db.session, "before_commit")
+def prevent_null_author(session):
+    for instance in session.dirty:
         if isinstance(instance, Announcement) and instance.author_id is None:
-            instance.author_id = -1  # Silinmiş kullanıcı ID'si
+            instance.author_id = -1

@@ -12,31 +12,46 @@
     {% endif %}
 </head>
 <body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <a class="navbar-brand ms-4" href="#">Devamsızlık Takip</a>
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+        <a class="navbar-brand ms-4" href="/">Devamsızlık Takip</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse ms-4" id="navbarSupportedContent">
-          <div class="navbar-nav me-auto">
-            <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Ana Sayfa</a>
-            <a class="nav-item nav-link" href="{{ url_for('students.unattendance') }}">Devamsızlık</a>
-            <a class="nav-item nav-link" href="{{ url_for('docs.docs_list') }}">Belgeler</a>
-          </div>
-          <div class="navbar-nav">
-            {% if current_user.is_authenticated %}
-              <a class="nav-item nav-link" href="{{ url_for('students.profile') }}">Profilim</a>
-              <a class="nav-item nav-link" href="{{ url_for('students.logout') }}">Çıkış Yap</a>
-            {% else %}
-              <a class="nav-item nav-link" href="{{ url_for('students.login') }}">Giriş Yap</a>
-              <a class="nav-item nav-link" href="{{ url_for('students.register') }}">Kayıt Ol</a>
-            {% endif %}
-          </div>
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.home') }}">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('students.unattendance') }}">Devamsızlık</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('docs.docs_list') }}">Belgeler</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('students.profile') }}">Profilim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('students.logout') }}">Çıkış Yap</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('students.login') }}">Giriş Yap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('students.register') }}">Kayıt Ol</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-      </nav>
-    </header>
+    </nav>
+</header>
+
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
@@ -60,7 +75,11 @@
                 <li class="list-group-item list-group-item-light"><strong>Kaydedilen Devamsızlık Sayısı: </strong>{{ total_unattendances }}</li>
                 <li class="list-group-item list-group-item-light"><strong>Eklenen Ders Sayısı: </strong>{{ total_lectures }}</li>
                 <li class="list-group-item list-group-item-light"><strong>Eklenen Belge Sayısı: </strong>{{ total_files }}</li>
+                {% if current_user.is_authenticated %}
+                {% if current_user.is_admin >= 10%}
                 <li class="list-group-item list-group-item-light"><a href="{{url_for('admin.admin_panel')}}">Yönetim</a></li>
+                {% endif %}
+                {% endif %}
               </ul>
           </div>
         </div>

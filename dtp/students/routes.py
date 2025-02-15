@@ -47,7 +47,7 @@ def reset_request():
 @login_required
 def logout():
     logout_user()
-    print(f"{current_user.email} çıkış yaptı.")
+    print(f"{current_user} çıkış yaptı.")
     return redirect(url_for('students.login'))
 
 @students.route('/profile')
@@ -59,28 +59,17 @@ def profile():
 @login_required
 def unattendance():
     form_get = GetUnattendancesForm()
-    lectures = Lecture.query.all()
-
-    form_get.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures]
-
-    unattendances = None
-    
-    if form_get.validate_on_submit():
-        lecture_id = form_get.lecture.data
-        unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
-
-    return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, unattendances=unattendances)
-
-@students.route('/unattendance/new/', methods=['GET', 'POST'])
-@login_required
-def unattendance_new():
     form_update = UpdateUnattendancesForm()
 
     lectures = Lecture.query.all()
     weeks = Weeks.query.all()
 
+    form_get.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures]
+
     form_update.lecture.choices = [(lecture.id, lecture.name) for lecture in lectures] 
     form_update.week.choices= [(week.id, week.week_name) for week in weeks]
+
+    unattendances = Unattendance.query.filter_by(student_id=current_user.id).all()
 
     if form_update.validate_on_submit():
         lecture_id = form_update.lecture.data
@@ -101,7 +90,11 @@ def unattendance_new():
             flash(f'Devamsızlık kaydı {new_unattendance.lecture.name} dersi için {week_id}. haftaya eklendi', 'success')
             return redirect(url_for('students.unattendance'))
         
-    return render_template('students/add_unattendances.html', form_update= form_update)
+    if form_get.validate_on_submit():
+        lecture_id = form_get.lecture.data
+        unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
+
+    return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update= form_update, unattendances=unattendances)
 
 @students.route('/unattendance/delete/<int:id>', methods=['POST'])
 def delete_unattendance(id):

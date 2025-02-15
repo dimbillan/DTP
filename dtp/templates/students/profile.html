@@ -1,43 +1,27 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section py-5">
+<div class="py-5">
     <div class="container">
         <div class="card shadow-sm p-4">
             <h2 class="card-title mb-4 text-center">Öğrenci Bilgileri</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong>Öğrenci ID:</strong>
-                </div>
-                <div class="col-md-8">
-                    <p>{{ student.id }}</p>
-                </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Öğrenci ID:</div>
+                <div class="col-md-8 text-break">{{ student.id }}</div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong>Öğrenci E-Posta:</strong>
-                </div>
-                <div class="col-md-8">
-                    <p>{{ student.email }}</p>
-                </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Öğrenci E-Posta:</div>
+                <div class="col-md-8 text-break">{{ student.email }}</div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <strong>Öğrenci Adı:</strong>
-                </div>
-                <div class="col-md-8">
-                    <p>{{ student.name }}</p>
-                </div>
+            <div class="row mb-3">
+                <div class="col-md-4 fw-bold">Öğrenci Adı:</div>
+                <div class="col-md-8 text-break">{{ student.name }}</div>
             </div>
+            
             <div class="row">
-                <div class="col-md-4">
-                    <strong>Yetki Seviyesi:</strong>
-                </div>
-                <div class="col-md-8">
-                    {% if student.is_admin >= 1%}
-                    <p>{{ student.is_admin }}</p>
-                    {% endif %}
-                </div>
+                <div class="col-md-4 fw-bold">Rol:</div>
+                <div class="col-md-8">{% if student.is_admin > 1 %}{{ student.is_admin }}{% else %} Öğrenci {% endif %}</div>
             </div>
+            
         </div>
     </div>
 </div>

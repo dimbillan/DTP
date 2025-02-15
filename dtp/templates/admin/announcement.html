@@ -3,37 +3,38 @@
 {% block content %}
 <div class="container mt-4">
   {% if announcements %}
-  {% for announce in announcements %}
-  <div class="media mb-4 p-3 border rounded shadow-sm">
-    <div class="media-body">
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5 class="mr-2 mb-0">Duyuruyu yapan: {{ announce.author.name }}</h5>
-        <small class="text-muted">{{ announce.date_posted.strftime('%D %H:%M:%S') }}</small>
-      </div>
-      <h2><a href="#" class="text-dark">{{ announce.title }}</a></h2>
-      <p style="word-break: break-all;">{{ announce.content }}</p>
-      <div class="d-flex">
-        <form action="{{ url_for('admin.update_announcement', id=announce.id) }}" method="POST" class="mr-2">
-          <button type="submit" class="btn btn-warning btn-sm">Düzenle</button>
-        </form>
-        <form action="{{ url_for('admin.delete_announcement', id=announce.id) }}" method="POST">
-          <button type="submit" class="btn btn-danger btn-sm">Sil</button>
-        </form>
+    {% for announce in announcements %}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <h5 class="mb-0">Duyuruyu yapan: {% if not announce.author.name %}Silinmiş Kullanıcı {% else %} {{ announce.author.name }}{% endif %}</h5>
+          <small class="text-muted">{{ announce.date_posted.strftime('%d/%m/%Y %H:%M:%S') }}</small>
+        </div>
+        <h4 class="card-title">
+          <a href="#" class="text-dark text-decoration-none">{{ announce.title }}</a>
+        </h4>
+        <p class="card-text" style="word-break: break-word;">{{ announce.content }}</p>
+        <div class="d-flex">
+          <form action="{{ url_for('admin.update_announcement', id=announce.id) }}" method="POST" class="me-2">
+            <button type="submit" class="btn btn-warning btn-sm">Düzenle</button>
+          </form>
+          <form action="{{ url_for('admin.delete_announcement', id=announce.id) }}" method="POST">
+            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
   {% else %}
-  <div class="media mb-4 p-3 border rounded shadow-sm">
-    <div class="media-body">
-      <div class="d-flex justify-content-between align-items-center mb-2">
-        <h5 class="mr-2 mb-0">Henüz Duyuru Yok</h5>
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body text-center">
+        <h5 class="mb-0">Henüz Duyuru Yok</h5>
       </div>
     </div>
-  </div>
-{% endif %}
-<div class="mb-3">
-  <a href="{{ url_for('admin.new_announcement') }}" class="btn btn-primary">Duyuru Ekle</a>
+  {% endif %}
+
+  <div class="text-center">
+    <a href="{{ url_for('admin.new_announcement') }}" class="btn btn-primary">Duyuru Ekle</a>
   </div>
 </div>
 {% endblock content %}

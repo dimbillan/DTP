@@ -1,82 +1,85 @@
 {% extends "layout/base.html" %}
 {% block content %}
+<small>Lütfen Sadece İmza Kağıtlarını Yükleyiniz</small>
 <div class="content-section">
     <form method="POST" action="" enctype="multipart/form-data">
         {{ form_docs.hidden_tag() }}
-        <fieldset class="form-group">
+        <fieldset class="mb-3">
             <legend class="border-bottom mb-4">Belge Seçiniz</legend>
-            <div class="form-group">
-                {{ form_docs.docs_file(class="btn btn-outline-info") }}
+            <div class="mb-3">
+                {{ form_docs.docs_file(class="form-control") }}
                 {% if form_docs.docs_file.errors %}
-                <div class="invalid-feedback">
-                    {% for error in form_docs.docs_file.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
+                    <div class="invalid-feedback">
+                        {% for error in form_docs.docs_file.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
                 {% endif %}
             </div>
             <small>Sadece JPG, JPEG ve PNG uzantılı belgeler yüklenebilir</small>
             <legend class="border-bottom mt-4">Belgenin Ait Olduğu Dersi Seçiniz</legend>
-            <div class="form-group">
+            <div class="mb-3">
                 {{ form_docs.docs_lecture(class="form-control form-control-lg") }}
             </div>
         </fieldset>
-        <div class="form-group">
+        <div class="mb-3">
             {{ form_docs.submit(class="btn btn-outline-info") }}
         </div>
     </form>
 </div>
+
 <div class="content-section">
-        <form method="POST" action="">
-            {{ form_query.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Ders Seçiniz</legend>
-                <div class="form-group">
-                    {{ form_query.docs_lecture_query(class="form-control form-control-lg") }}
-                    {% if form_query.docs_lecture_query.errors %}
+    <form method="POST" action="">
+        {{ form_query.hidden_tag() }}
+        <fieldset class="mb-3">
+            <legend class="border-bottom mb-4">Ders Seçiniz</legend>
+            <div class="mb-3">
+                {{ form_query.docs_lecture_query(class="form-control form-control-lg") }}
+                {% if form_query.docs_lecture_query.errors %}
                     <div class="invalid-feedback">
                         {% for error in form_query.docs_lecture_query.errors %}
                             <span class="text-danger">{{ error }}</span>
                         {% endfor %}
                     </div>
-                    {% endif %}
-                </div>
-            </fieldset>
-            <div class="form-group">
-                {{ form_query.submit(class="btn btn-outline-info") }}
+                {% endif %}
             </div>
-        </form>
-</div>
-<div class="content-section">   
-        <div class="row g-4"> 
-        {% if docs %}
-        {% for doc in docs %}
-        <div class="col-md-4 col-sm-6">
-            <div class="card shadow-sm h-100">
-                <a href="{{ url_for('static', filename='docs/' + doc) }}" download>
-                    <img src="{{ url_for('static', filename='docs/' + doc) }}" 
-                            class="card-img-top img-fluid" 
-                            alt="doc">
-                </a>
-                <div class="card-body text-center">
-                    <h5 class="card-title text-truncate">{{ doc }}</h5>
-                    <a href="{{ url_for('static', filename='docs/' + doc) }}" download class="btn btn-primary mt-2">
-                        Belgeyi İndir
-                    </a>
-                    {% if current_user.is_admin%}
-                    <a href="{{ url_for('docs.delete_file', filename = doc) }}" class="btn btn-danger mt-2">
-                        Sil
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
+        </fieldset>
+        <div class="mb-3">
+            {{ form_query.submit(class="btn btn-outline-info") }}
         </div>
-        {% endfor %}
+    </form>
+</div>
+
+<div class="content-section">
+    <div class="row g-4">
+        {% if docs %}
+            {% for doc in docs %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card shadow-sm h-100">
+                        <a href="{{ url_for('static', filename='docs/' + doc) }}">
+                            <img src="{{ url_for('static', filename='docs/' + doc) }}" 
+                                class="card-img-top img-fluid" 
+                                alt="doc">
+                        </a>
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-truncate">{{ doc }}</h5>
+                            <a href="{{ url_for('static', filename='docs/' + doc) }}" download class="btn btn-primary mt-2">
+                                Belgeyi İndir
+                            </a>
+                            {% if current_user.is_admin > 50 %}
+                                <a href="{{ url_for('docs.delete_file', filename=doc) }}" class="btn btn-danger mt-2">
+                                    Sil
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         {% else %}
             <div class="card-body text-center">
                 <h5 class="card-title">Belge bulunamadı.</h5>
             </div>
         {% endif %}
-        </div>
+    </div>
 </div>
 {% endblock content %}

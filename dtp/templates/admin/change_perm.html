@@ -1,0 +1,28 @@
+{% extends "layout/base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form_change.hidden_tag() }}
+        <fieldset class="mb-4">
+            <legend class="border-bottom mb-4">{{ student.name }} Adlı Öğrencinin Yetki Seviyesini Değiştir</legend>
+            <div class="mb-3">
+                {% if form_change.level.errors %}
+                    {{ form_change.level(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form_change.level.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form_change.level(class="form-control") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="d-flex gap-2">
+            {{ form_change.submit(class="btn btn-outline-info") }}
+            <button type="button" class="btn btn-secondary" onclick="window.history.back();">Geri Dön</button>
+        </div>
+        
+    </form>
+</div>
+{% endblock content %}

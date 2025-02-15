@@ -3,16 +3,30 @@
 <div class="content-section">
     <form method="POST" action="">
         {{ form_announcement.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Duyuruyu Güncelle</legend>
-            <div class="form-group">
-                {{ form_announcement.title(class="form-control form-control-lg") }}
+        <fieldset class="mb-3">
+            <legend class="border-bottom mb-4">Duyuru Güncelle</legend>
+
+            <div class="mb-3">
+                <label for="title" class="form-label">Duyuru Başlığı</label>
+                {% if form_announcement.title.errors %}
+                    {{ form_announcement.title(class="form-control is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form_announcement.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form_announcement.title(class="form-control") }}
+                {% endif %}
             </div>
-            <div class="form-group">
-                {{ form_announcement.content(class="form-control form-control-lg") }}    
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Duyuru İçeriği</label>
+                {{ form_announcement.content(class="form-control", rows=5) }}
             </div>
         </fieldset>
-        <div class="form-group">
+
+        <div class="d-grid">
             {{ form_announcement.submit(class="btn btn-outline-info") }}
         </div>
     </form>

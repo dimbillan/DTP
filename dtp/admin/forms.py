@@ -19,8 +19,8 @@ class AnnouncementForm(FlaskForm):
             raise ValidationError('Bu başlık ile daha önce duyuru yapılmış. Lütfen başka başlık seçin')
         
 class PrivilegeForm(FlaskForm):
-    privilege_level = IntegerField(validators=[
-                                        InputRequired(), Length(min=2, max=128)], render_kw={"placeholder": "Seviye"})
+    level = IntegerField(validators=[
+                                        InputRequired()], render_kw={"placeholder": "Seviye"})
     
     submit = SubmitField("Yetkilendir")
 

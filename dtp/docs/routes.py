@@ -38,7 +38,9 @@ def docs_list():
         docs_lecture = form_docs_q.docs_lecture_query.data
         docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png')) and f.startswith(docs_lecture)]
         return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
-    return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q)
+    
+    docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png'))]
+    return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
 
 @docs.route('/docs/delete/<string:filename>', methods=['GET', 'POST'])
 @login_required

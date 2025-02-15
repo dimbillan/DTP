@@ -1,38 +1,43 @@
 {% extends "layout/base.html" %}
+
 {% block content %}
-
-<table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Ders ID</th>
-        <th>Ders Adı</th>
-        <th>Ders Kodu</th>
-        <th>İşlem</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% if lectures %}
-    {% for lecture in lectures %}
-    <tr>
-        <td>{{ lecture.id }}</td>
-        <td>{{ lecture.name }}</td>
-        <td>{{ lecture.code }}</td>
-        <td>
-            <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST">
-                <button type="submit" class="btn btn-danger btn-sm">Dersi Sil</button>
-            </form>
-        </td>
-      </tr>
-    {% endfor %}
-    {% else %}
-    <tr>
-        <td colspan="4">Ders kaydı bulunamadı.</td>
-    </tr>
-    {% endif %}
-    </tbody>
-</table>
-
-<div class="btn">
-<a href="{{ url_for('admin.add_lecture')}}">Ders Ekle</a>
+<div class="text-center mt-3">
+    <a href="{{ url_for('admin.add_lecture') }}" class="btn btn-outline-info d-block w-10">Ders Ekle</a>
 </div>
+<div class="container mt-4">
+    <h4 class="mb-3">Dersler</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Ders ID</th>
+                    <th scope="col">Ders Adı</th>
+                    <th scope="col">Ders Kodu</th>
+                    <th scope="col">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if lectures %}
+                    {% for lecture in lectures %}
+                        <tr>
+                            <td>{{ lecture.id }}</td>
+                            <td>{{ lecture.name }}</td>
+                            <td>{{ lecture.code }}</td>
+                            <td>
+                                <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-danger btn-sm">Dersi Sil</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-muted text-center">Ders kaydı bulunamadı.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock content %}

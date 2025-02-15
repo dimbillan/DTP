@@ -1,64 +1,52 @@
 {% extends "layout/base.html" %}
+
 {% block content %}
-<!--
-Yetki Seviyeleri:
-1   -> Standart Öğrenci 
-5   -> Geçici Belgeleri Gör
-10  -> Duyuru Düzenle
-20  -> Duyuru Ekle
-50  -> Ders Ekle
-100 -> Öğrenci Bilgileri Düzenle
-999 -> Admin
--->
-<table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Öğrenci ID</th>
-        <th>Öğrenci Adı</th>
-        <th>E-Posta</th>
-        <th>Yetki Seviyesi</th>
-        <th>İşlem</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% if students %}
-    {% for student in students %}
-    {% if student.id != current_user.id %}
-    <tr>
-        <td>{{ student.id }}</td>
-        <td>{{ student.name }}</td>
-        <td>{{ student.email }}</td>
-        <td>{{ student.is_admin }}</td>
-        <td>
-          <div class="d-flex justify-content-between align-items-center mb-2">
-          <div>
-            {% if current_user.is_admin >=500  %}
-            <form action="{{ url_for('admin.give_perm', id=student.id) }}" method="POST">
-                <button type="submit" class="btn btn-danger btn-sm">{{ current_user.is_admin }}. Seviye Yetki Ver</button>
-            </form>
-            {% else %}
-            <form action="{{ url_for('admin.take_perm', id=student.id) }}" method="POST">
-                <button type="submit" class="btn btn-danger btn-sm">Yetki Seviyesini 1'e Düşür</button>
-            </form>
-            {% endif %}
-          </div>
-          {% if student.is_admin <= current_user.is_admin %}
-          <div>
-            <form action="{{ url_for('admin.delete_student', id=student.id) }}" method="POST">
-              <button type="submit" class="btn btn-danger btn-sm">Öğrenciyi Sil</button>
-            </form>
-          </div>
-          {% endif %}
-          </div>
-        </td>
-      </tr>
-      {% endif %}
-    {% endfor %}
-    {% else %}
-    <tr>
-        <td colspan="5">Öğrenci kaydı bulunamadı.</td>
-    </tr>
-    {% endif %}
-    </tbody>
-</table>
+<div class="container mt-4">
+    <h4 class="mb-3">Öğrenci Listesi</h4>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Öğrenci ID</th>
+                    <th scope="col">Öğrenci Adı</th>
+                    <th scope="col">E-Posta</th>
+                    <th scope="col">Yetki Seviyesi</th>
+                    <th scope="col">İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if students %}
+                    {% for student in students %}
+                        {% if student.id != current_user.id %}
+                            <tr>
+                                <td>{{ student.id }}</td>
+                                <td>{{ student.name }}</td>
+                                <td>{{ student.email }}</td>
+                                <td>{{ student.is_admin }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        {% if current_user.is_admin >= 100 %}
+                                            <a href="{{ url_for('admin.change_perm', id=student.id) }}" class="btn btn-warning btn-sm">Yetki Değiştir</a>
+                                        {% endif %}
+                                        
+                                        {% if student.is_admin <= current_user.is_admin %}
+                                            <form action="{{ url_for('admin.delete_student', id=student.id) }}" method="POST">
+                                                <button type="submit" class="btn btn-danger btn-sm">Öğrenciyi Sil</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-muted text-center">Öğrenci kaydı bulunamadı.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock content %}
