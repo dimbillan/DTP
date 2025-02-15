@@ -122,4 +122,5 @@ a.article-title:hover {
 legend {
   font-size: 1.5rem;  /* Başlık büyüklüğünü arttırarak dikkat çekici hale getirir */
   font-weight: 600;   /* Başlık metnine kalınlık ekler */
+  color:#5f788a;
 }
