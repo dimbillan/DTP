@@ -23,10 +23,10 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'students.login'
 login_manager.login_message_category = 'info'
 
-from dtp.admin.routes import admin
+from dtp.admin import admin
 from dtp.docs.routes import docs
 from dtp.main.routes import main
-from dtp.students.routes import students
+from dtp.students import students
 
 app.register_blueprint(admin)
 app.register_blueprint(docs)

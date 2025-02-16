@@ -14,8 +14,10 @@ docs = Blueprint('docs', __name__)
 def docs_list():
 
     lectures = Lecture.query.all()
+
     form_docs = DocsForm()
     form_docs.docs_lecture.choices = [(lecture.id, lecture.name) for lecture in lectures]
+
     form_docs_q = DocsFormQuery()
     form_docs_q.docs_lecture_query.choices = [(lecture.id, lecture.name) for lecture in lectures]
         
@@ -45,16 +47,20 @@ def docs_list():
 @docs.route('/docs/delete/<string:filename>', methods=['GET', 'POST'])
 @login_required
 def delete_file(filename):
-    if current_user.is_admin:
+    if current_user.is_admin > 50:
         file_path = os.path.join("dtp","static","docs",filename)
+        
         if os.path.exists(file_path):
+
             try:
                 os.remove(file_path)
                 flash(f"{filename} başarıyla silindi.", "success")
             except Exception as e:
                 flash(f"Dosya silinirken bir hata oluştu: {str(e)}", "danger")
+
         else:
             flash("Dosya bulunamadı.", "warning")
+
     else:
         flash("Bu işlemi gerçekleştirmek için yetkiniz yok.", "danger")
     

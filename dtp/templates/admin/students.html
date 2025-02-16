@@ -29,12 +29,13 @@
                                         {% if current_user.is_admin >= 100 %}
                                             <a href="{{ url_for('admin.change_perm', id=student.id) }}" class="btn btn-warning btn-sm">Yetki Değiştir</a>
                                         {% endif %}
-                                        
+                                        <!--
                                         {% if student.is_admin <= current_user.is_admin %}
                                             <form action="{{ url_for('admin.delete_student', id=student.id) }}" method="POST">
                                                 <button type="submit" class="btn btn-danger btn-sm">Öğrenciyi Sil</button>
                                             </form>
                                         {% endif %}
+                                        --> 
                                     </div>
                                 </td>
                             </tr>
