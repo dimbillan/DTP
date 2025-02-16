@@ -16,5 +16,6 @@ def home():
     else:
         last_5_unattendances = None
 
-    print(f"{request.remote_addr} bağlandı.")
+    real_ip = request.headers.get("X-Real-IP") or request.headers.get("X-Forwarded-For") or request.remote_addr
+    print(f"{real_ip} bağlandı.")
     return render_template('home.html', title='DTP', announcements=announcements, unattendances = last_5_unattendances)
