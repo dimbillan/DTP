@@ -40,19 +40,21 @@ def register():
         return redirect(url_for('main.home'))
     
     form = RegisterForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        student = Student(email=form.email.data, name=form.name.data, password=hashed_password)
+    if request.method == "POST":
+        if form.validate_on_submit():
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            student = Student(email=form.email.data, name=form.name.data, password=hashed_password)
+            
+            db.session.add(student)
+            db.session.commit()
+
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data} - ({form.name.data})] kaydoldu.")
+            flash('Hesabınız oluşturuldu. Artık giriş yapabilirsiniz', 'success')
+
+            return redirect(url_for('students.login'))
         
-        db.session.add(student)
-        db.session.commit()
-
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data} - ({form.name.data})] kaydoldu.")
-        flash('Hesabınız oluşturuldu. Artık giriş yapabilirsiniz', 'success')
-
-        return redirect(url_for('students.login'))
-    
-    logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data} - {form.name.data}] kaydolma denemesi başarısız.")
+        else:
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data} - {form.name.data}] kaydolma denemesi başarısız.")
 
     return render_template('auth/register.html', title='Kayıt Ol', form=form)
 
