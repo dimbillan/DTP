@@ -8,16 +8,18 @@ from flask_migrate import Migrate
 from flask_mail import Mail
 
 from dtp.config import Config
+from dtp.logging_config import setup_logger
 
 app = Flask(__name__)
 
 app.config.from_object(Config)
-#print(Config.SQLALCHEMY_DATABASE_URI)
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
+
+logger = setup_logger()
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'students.login'

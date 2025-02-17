@@ -7,4 +7,9 @@ __pypackages__/
 deploy.bat
 ngrok.exe
 Procfile
+critical.log
+debug.log
+error.log
+info.log
+warning.log
 run.py
