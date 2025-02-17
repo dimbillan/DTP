@@ -48,7 +48,7 @@ def docs_list():
         docs_lecture = form_docs_q.docs_lecture_query.data
         docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png')) and f.startswith(docs_lecture)]
 
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_filename} adlı dersin belgelerini sorguladı.")
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {docs_lecture} numaralı dersin belgelerini sorguladı.")
 
         return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
     
