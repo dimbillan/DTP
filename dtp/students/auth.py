@@ -14,7 +14,7 @@ def get_real_ip():
 @students.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] zaten giriş yaptığı için anasayfaya yönlendirildi.") 
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] zaten giriş yaptiği için anasayfaya yönlendirildi.") 
 
         return redirect(url_for('main.home'))
     
@@ -25,10 +25,10 @@ def login():
         if student and bcrypt.check_password_hash(student.password, form.password.data):
             login_user(student)
             next_page = request.args.get('next')
-            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] giriş yaptı.") 
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] giriş yapti.") 
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] hatalı giriş denemesi yaptı.") 
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] hatalı giriş denemesi yapti.") 
             flash('Giriş Başarısız. Öğrenci numaranızı ve şifrenizi kontrol edin.', 'danger')
 
     return render_template('auth/login.html', title='Giriş Yap', form=form)
@@ -36,7 +36,7 @@ def login():
 @students.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] zaten kaydolduğu yaptığı için girişe yönlendirildi.")
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] zaten kaydolduğu için girişe yönlendirildi.")
         return redirect(url_for('main.home'))
     
     form = RegisterForm()
@@ -61,7 +61,7 @@ def register():
 @students.route('/logout', methods=['GET', 'POST'])  
 @login_required
 def logout():
-    logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] çıkış yaptı.")
+    logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] çikiş yapti.")
     logout_user()
     return redirect(url_for('students.login'))
 

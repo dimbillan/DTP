@@ -30,7 +30,7 @@ def unattendance():
 
     unattendances = Unattendance.query.filter_by(student_id=current_user.id).all()
 
-    logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] devamsızlık sayfasında.") 
+    logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] devamsizlik sayfasinda.") 
 
     if form_update.validate_on_submit():
         lecture_id = form_update.lecture.data
@@ -48,7 +48,7 @@ def unattendance():
             db.session.add(new_unattendance)
             db.session.commit()
 
-            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_unattendance.lecture.name} dersi için {new_unattendance.week_id}. haftaya devamsızlık ekledi.") 
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_unattendance.lecture.name} dersi için {new_unattendance.week_id}. haftaya devamsizlik ekledi.") 
 
             flash(f'Devamsızlık kaydı {new_unattendance.lecture.name} dersi için {week_id}. haftaya eklendi', 'success')
 
@@ -58,7 +58,7 @@ def unattendance():
         lecture_id = form_get.lecture.data
         unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
         
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_unattendance.lecture.name} dersi için devamsızlıklarını sorguladı.") 
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_unattendance.lecture.name} dersi için devamsizliklarini sorguladi.") 
 
     return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update= form_update, unattendances=unattendances)
 
@@ -70,7 +70,7 @@ def delete_unattendance(id):
     if devamsizlik:
         db.session.delete(devamsizlik)
         db.session.commit()
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {devamsizlik.lecture.name} dersi için {devamsizlik.week_id}. haftadaki devamsızlığını sildi.") 
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {devamsizlik.lecture.name} dersi için {devamsizlik.week_id}. haftadaki devamsizliğini sildi.") 
         flash(f'Devamsızlık kaydı {devamsizlik.lecture.name} dersi için {devamsizlik.week_id}. haftadan silindi', 'info')
 
     return redirect(url_for('students.unattendance'))

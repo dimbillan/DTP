@@ -23,7 +23,7 @@ def home():
         .limit(5).all()
     
     else:
-        logger.info(f"{request.method} - [IP: {real_ip}] - [Giriş Yapmamış Kullanıcı] anasayfada.")  
+        logger.info(f"{request.method} - [IP: {real_ip}] - [Giriş Yapmamiş Kullanici] anasayfada.")  
         last_5_unattendances = None
 
     return render_template('home.html', title='DTP', announcements=announcements, unattendances = last_5_unattendances)

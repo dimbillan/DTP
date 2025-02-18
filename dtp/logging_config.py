@@ -15,7 +15,7 @@ def setup_logger():
     }
 
     for level, filename in log_levels.items():
-        handler = logging.FileHandler(filename)
+        handler = logging.FileHandler(filename, encoding="utf-8")
         handler.setLevel(getattr(logging, level))
         handler.setFormatter(formatter)
         logger.addHandler(handler)
