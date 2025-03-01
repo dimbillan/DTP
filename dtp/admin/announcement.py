@@ -44,8 +44,12 @@ def new_announcement():
 def update_announcement(id):
     if canReach(10):
         current_announcement = Announcement.query.get(id)
-        form_announcement = AnnouncementForm(obj=current_announcement)
         
+        if not current_announcement:
+            flash("Duyuru bulunamadı.", "error")
+            return redirect(url_for('admin.announcement'))
+            
+        form_announcement = AnnouncementForm(obj=current_announcement)
 
         if form_announcement.validate_on_submit():
             current_announcement.title = form_announcement.title.data
@@ -54,7 +58,7 @@ def update_announcement(id):
 
             flash(f"{form_announcement.title.data} başlıklı duyuru güncellendi", "success")
 
-            return redirect(url_for('admin.new_announcement'))
+            return redirect(url_for('admin.announcement'))
         
         return render_template('admin/update_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
     else:

@@ -1,484 +1,394 @@
-/* Genel sayfa ayarları */
-body {
-  background-color: #f4f7fc;
-  color: #333;
-  margin-top: 4rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* ================ TEMA DEĞİŞKENLERİ ================ */
+:root {
+    /* Ana renkler */
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --warning-color: #f1c40f;
+    --info-color: #3498db;
+    --icon-color: #e2e8f0;
+    
+    /* Açık tema */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #dee2e6;
+    --bg-steel: #5f788a;
+    --table-text: #333333;
+
 }
 
-/* Root değişkenleri */
-:root {
-  --primary-color: #2c3e50;
-  --secondary-color: #34495e;
+[data-theme="dark"] {
+    /* Karanlık tema */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --text-primary: #ffffff;
+    --text-secondary: #cccccc;
+    --border-color: #404040;
+    --bg-steel: #2c3e50;
+    --table-text: #e2e8f0;
+}
+
+/* ================ GENEL STILLER ================ */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    margin-top: 4rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Başlık stilleri */
 h1, h2, h3, h4, h5, h6 {
-  color: #444;
-  font-weight: 600;
-  margin-bottom: 15px;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-/* Arka plan rengi */
-.bg-steel {
-  background-color: var(--primary-color) !important;
+/* Link stilleri */
+a {
+    color: var(--text-secondary);
+    text-decoration: none;
 }
 
-/* Navigasyon bağlantı stilleri */
-.site-header .navbar-nav .nav-link {
-  color: #cbd5db;
-  transition: color 0.3s ease;
+a:hover {
+    color: var(--secondary-color);
+    text-decoration: none;
 }
 
-.site-header .navbar-nav .nav-link:hover {
-  color: #fff;
-}
-
-.site-header .navbar-nav .nav-link.active {
-  font-weight: 600;
-  color: #fff;
-}
-
-/* İçerik bölümüne ait stil */
-.content-section {
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-}
-
-/* Makale başlık stili */
-.article-title {
-  color: #333;
-  font-weight: 500;
-}
-
-a.article-title:hover {
-  color: #007bff;
-  text-decoration: none;
-}
-
-/* Makale içerik stili */
-.article-content {
-  white-space: pre-line;
-  line-height: 1.6;
-  color: #555;
-}
-
-/* Makale resim stil */
-.article-img {
-  height: 70px;
-  width: 70px;
-  border-radius: 50%;
-  margin-right: 20px;
-  object-fit: cover;
-}
-
-/* Makale meta verileri */
-.article-metadata {
-  padding-bottom: 8px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid #f1f5f9;
-}
-
-.article-metadata a:hover {
-  color: #1a202c;
-  text-decoration: none;
-}
-
-/* SVG ikonları */
-.article-svg {
-  width: 26px;
-  height: 26px;
-  vertical-align: middle;
-  transition: transform 0.2s ease;
-}
-
-.article-svg:hover {
-  transform: scale(1.1);
-}
-
-/* Hesap profil görseli */
-.account-img {
-  height: 130px;
-  width: 130px;
-  margin-right: 24px;
-  margin-bottom: 18px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Hesap başlık stili */
-.account-heading {
-  font-size: 2.6rem;
-  font-weight: 600;
-  color: #2d3748;
-  margin-bottom: 20px;
-}
-
-.table-hover tbody tr:hover {
-  background-color: #f0f8ff;  /* Hafif mavi tonunda hover efekti */
-}
-
-.table-bordered th, .table-bordered td {
-  border-color: #e0e0e0;  /* Daha ince ve modern sınır çizgisi */
-}
-
-legend {
-  font-size: 1.5rem;  /* Başlık büyüklüğünü arttırarak dikkat çekici hale getirir */
-  font-weight: 600;   /* Başlık metnine kalınlık ekler */
-  color:#5f788a;
-}
-
-/* Navigasyon stilleri */
+/* ================ NAVBAR STILLER ================ */
 .navbar {
-  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.bg-steel {
+    background-color: var(--bg-steel) !important;
 }
 
 .nav-link {
-  color: rgba(255,255,255,.8) !important;
-  transition: color 0.3s ease;
+    color: rgba(255,255,255,.8) !important;
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
 }
 
 .nav-link:hover {
-  color: #fff !important;
+    color: #fff !important;
 }
 
-.site-header {
-  margin-bottom: 5rem;
+/* Tema Toggle Butonu */
+.theme-toggle {
+    background: rgba(255,255,255,.1);
+    border: none;
+    color: rgba(255,255,255,.8) !important;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-main {
-  min-height: calc(100vh - 180px);
-  padding: 20px 0;
+.theme-toggle:hover {
+    color: #fff !important;
+    transform: rotate(15deg);
+    background: rgba(255,255,255,.2);
 }
 
-/* Form stilleri */
+/* ================ İÇERİK BÖLÜMÜ ================ */
+.content-section {
+    background-color: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,.05);
+    margin-bottom: 1.5rem;
+}
+
+.content-section:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+}
+
+/* ================ FORM STILLER ================ */
 .form-control {
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 0.75rem;
-  transition: all 0.3s ease;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem;
+    border-radius: 6px;
+}
+
+.form-control::placeholder {
+    color: var(--text-secondary);
 }
 
 .form-control:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
+    background-color: var(--bg-secondary);
+    border-color: var(--primary-color);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.15);
 }
 
-.btn-outline-info {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-  transition: all 0.3s ease;
+/* ================ BUTON STILLER ================ */
+.btn {
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
 }
 
-.btn-outline-info:hover {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: #fff;
-}
-
-/* Tablo stilleri */
-.table {
-  margin-bottom: 0;
-}
-
-.table thead th {
-  background-color: #f8fafc;
-  border-bottom: 2px solid #e2e8f0;
-  color: var(--primary-color);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(44, 62, 80, 0.05);
-}
-
-.table td, .table th {
-  padding: 1rem;
-  vertical-align: middle;
-}
-
-.btn-danger {
-  background-color: #e74c3c;
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.btn-danger:hover {
-  background-color: #c0392b;
-  transform: translateY(-1px);
-}
-
-/* Legend stilleri */
-legend {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--primary-color);
-  padding-bottom: 0.5rem;
-}
-
-.border-bottom {
-  border-bottom: 2px solid #e2e8f0 !important;
-}
-
-/* Boş durum mesajları */
-.text-muted {
-  color: #718096 !important;
-  font-style: italic;
-}
-
-/* Belge kartları stilleri */
-.card {
-  border: 1px solid #e2e8f0;
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.card-title {
-  color: var(--primary-color);
-  font-size: 1rem;
-  margin-bottom: 1rem;
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
 }
 
 .btn-primary {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
 }
 
 .btn-primary:hover {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
-  transform: translateY(-1px);
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #ffffff;
 }
 
-/* Dosya yükleme alanı stilleri */
-.file-upload-info {
-  background-color: #f8fafc;
-  border: 1px dashed #cbd5e0;
-  border-radius: 6px;
-  padding: 1rem;
-  margin: 1rem 0;
-  color: #718096;
-  font-size: 0.9rem;
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: #ffffff;
 }
 
-.file-upload-info i {
-  color: var(--primary-color);
+.btn-danger:hover {
+    background-color: var(--danger-color);
+    opacity: 0.9;
+    color: #ffffff;
 }
 
-/* Profil kartı stilleri */
-.profile-card {
-  background: #ffffff;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-  transition: all 0.3s ease;
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: var(--text-primary);
 }
 
-.profile-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.btn-warning:hover {
+    background-color: var(--warning-color);
+    opacity: 0.9;
+    color: var(--text-primary);
 }
 
-.profile-header {
-  background: #ffffff;
-  color: var(--primary-color);
-  padding: 2rem;
-  border-radius: 12px 12px 0 0;
-  text-align: center;
-  position: relative;
-  border-bottom: 2px solid #e2e8f0;
+.btn-outline-info {
+    color: var(--text-primary);
+    border-color: var(--primary-color);
+    background-color: transparent;
 }
 
-.profile-header::before {
-  display: none;
+.btn-outline-info:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #ffffff;
 }
 
-.profile-header i,
-.profile-header h2 {
-  position: relative;
-  z-index: 1;
+.pagination .page-link {
+    color: var(--info-color);
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    transition: all 0.3s ease;
 }
 
-.profile-header i {
-  font-size: 3.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary-color);
+.pagination .page-item.active .page-link {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+    color: #ffffff;
 }
 
-.profile-header h2 {
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: var(--primary-color);
+.pagination .page-link:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    border-color: var(--border-color);
+}
+/* ================ TABLO STILLER ================ */
+.table {
+    margin-bottom: 0;
+    color: var(--table-text);
 }
 
-.profile-content {
-  padding: 2rem;
+.table td, .table th {
+    padding: 1rem;
+    vertical-align: middle;
+    background-color: var(--bg-secondary);
+    color: var(--table-text);
+    border-color: var(--border-color);
 }
 
-.profile-item {
-  padding: 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  transition: all 0.3s ease;
+.table-hover tbody tr:hover td {
+    background-color: var(--bg-primary);
 }
 
-.profile-item:last-child {
-  border-bottom: none;
+/* ================ LIST GROUP STILLER ================ */
+.list-group-item {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+    color: var(--text-primary);
 }
 
-.profile-item:hover {
-  background-color: #f8fafc;
+.list-group-item-action:hover {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
 }
 
-.profile-label {
-  color: var(--primary-color);
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+/* ================ KART STILLER ================ */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
 }
 
-.profile-value {
-  color: #4a5568;
-  font-size: 1rem;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-.profile-badge {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  border-radius: 50rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.card-body {
+    color: var(--text-primary);
 }
 
-.profile-badge-student {
-  background-color: #e2e8f0;
-  color: #4a5568;
+.card-title {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
 }
 
-.profile-badge-admin {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-/* Admin Panel Stilleri */
-.admin-panel-item {
-  padding: 1.25rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  border: 1px solid #e2e8f0;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  background: #ffffff;
-}
-
-.admin-panel-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: var(--primary-color);
-}
-
-.admin-panel-item i {
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  color: var(--primary-color);
-}
-
-.admin-panel-title {
-  color: var(--primary-color);
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 1rem;
-  margin-bottom: 2rem;
-}
-
-/* Duyuru Kartı Stilleri */
+/* ================ DUYURU KARTI ================ */
 .announcement-card {
-  border: none;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  margin-bottom: 1.5rem;
+    border: none;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    background-color: var(--bg-secondary);
 }
 
-.announcement-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+.announcement-header,
+.announcement-content,
+.announcement-footer {
+    background-color: var(--bg-secondary);
+    padding: 1rem;
 }
 
 .announcement-header {
-  background-color: #f8fafc;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 1rem;
-}
-
-.announcement-content {
-  padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .announcement-footer {
-  background-color: #f8fafc;
-  border-top: 1px solid #e2e8f0;
-  padding: 1rem;
+    border-top: 1px solid var(--border-color);
 }
 
-/* Log Görüntüleyici Stilleri */
-.log-container {
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 1.5rem;
+/* ================ PROFİL STILLER ================ */
+.profile-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
 }
 
-.log-header {
-  background: var(--primary-color);
-  color: white;
-  padding: 1rem;
-  border-radius: 8px 8px 0 0;
-  margin-bottom: 1rem;
+.profile-badge-student {
+    background-color: var(--bg-steel);
+    color: #fff;
 }
 
-.log-entry {
-  padding: 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
-  font-family: monospace;
+.profile-badge-admin {
+    background-color: var(--primary-color);
+    color: #fff;
 }
 
-.back-button {
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+.profile-card {
+    background-color: var(--bg-secondary);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
 }
 
-.back-button:hover {
-  background-color: var(--secondary-color);
-  transform: translateY(-2px);
+.profile-header {
+    background-color: var(--bg-secondary);
+    color: var(--primary-color);
+    padding: 2rem;
+    border-radius: 12px 12px 0 0;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ================ ADMİN PANEL ================ */
+.admin-panel-item {
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.admin-panel-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+    background-color: var(--bg-primary);
+}
+
+.admin-panel-title {
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* ================ İKON STILLER ================ */
+i {
+    color: var(--icon-color);
 }
 
 .back-button i {
-  margin-right: 0.5rem;
+    color: #ffffff;
+    margin-right: 0.5rem;
+}
+
+/* ================ YARDIMCI SINIFLAR ================ */
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.border-top,
+.border-bottom {
+    border-color: var(--border-color) !important;
+}
+
+/* ================ MEDYA SORGULARI ================ */
+@media (max-width: 991.98px) {
+    .theme-toggle {
+        margin: 8px 0;
+    }
+}
+
+/* ================ DOSYA YÜKLEME STILLER ================ */
+.file-upload-info {
+    background-color: var(--bg-secondary);
+    border-left: 4px solid var(--info-color);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    align-items: center;
+}
+
+.file-upload-info i {
+    color: var(--info-color);
+    font-size: 1.1rem;
+}
+
+.file-upload-info span {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+#file-upload {
+    display: none;
 }

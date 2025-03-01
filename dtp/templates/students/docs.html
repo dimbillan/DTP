@@ -18,7 +18,8 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="form-label">Belge Seçiniz</label>
-                    {{ form_docs.docs_file(class="form-control") }}
+                    <label for="file-upload" class="form-control">Dosya Seç</label>
+                    {{ form_docs.docs_file(id="file-upload") }}
                     {% if form_docs.docs_file.errors %}
                         <div class="invalid-feedback d-block">
                             {% for error in form_docs.docs_file.errors %}

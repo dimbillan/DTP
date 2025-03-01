@@ -22,7 +22,16 @@
 
             <div class="mb-3">
                 <label for="content" class="form-label">Duyuru İçeriği</label>
-                {{ form_announcement.content(class="form-control", rows=5) }}
+                {% if form_announcement.content.errors %}
+                    {{ form_announcement.content(class="form-control is-invalid", rows=5) }}
+                    <div class="invalid-feedback">
+                        {% for error in form_announcement.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form_announcement.content(class="form-control", rows=5) }}
+                {% endif %}
             </div>
         </fieldset>
 
