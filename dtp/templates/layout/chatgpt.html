@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fa;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+
+        .card h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .attendance-status {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .attendance-status div {
+            text-align: center;
+            flex: 1;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+        }
+
+        .attendance-status div span {
+            display: block;
+            font-size: 1.5em;
+            color: #007bff;
+        }
+
+        .attendance-history table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .attendance-history table th,
+        .attendance-history table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .attendance-history table th {
+            background-color: #f1f1f1;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Student Attendance Tracker</h1>
+    </header>
+
+    <div class="container">
+        <!-- Dashboard Section -->
+        <div class="card">
+            <h2>Welcome, [Student Name]</h2>
+            <p>Here is your attendance summary and history.</p>
+        </div>
+
+        <!-- Attendance Status -->
+        <div class="card">
+            <h2>Attendance Status</h2>
+            <div class="attendance-status">
+                <div>
+                    <span>12</span>
+                    Present
+                </div>
+                <div>
+                    <span>3</span>
+                    Absent
+                </div>
+                <div>
+                    <span>1</span>
+                    Excused
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance History -->
+        <div class="card attendance-history">
+            <h2>Attendance History</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2025-02-20</td>
+                        <td>Present</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-19</td>
+                        <td>Absent</td>
+                        <td>Sick</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-18</td>
+                        <td>Excused</td>
+                        <td>Family Emergency</td>
+                    </tr>
+                    <tr>
+                        <td>2025-02-17</td>
+                        <td>Present</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2025 Student Attendance Tracker | All Rights Reserved</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>

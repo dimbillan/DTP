@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        .nav-link.active {
+            background-color: rgba(0, 123, 255, 0.1);
+            border-radius: 5px;
+        }
+        .dashboard-card {
+            transition: transform 0.3s;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        .absence-item {
+            border-left: 4px solid transparent;
+        }
+        .absence-pending {
+            border-left-color: #ffc107;
+        }
+        .absence-approved {
+            border-left-color: #28a745;
+        }
+        .absence-rejected {
+            border-left-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-calendar-check me-2"></i>
+                AttendTrack
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">My Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Report Absence</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Attendance History</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> John Smith
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row mb-4">
+            <div class="col">
+                <h1 class="mb-3">Student Dashboard</h1>
+                <p class="text-muted">Welcome back, John. You have 3 upcoming classes today.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-4 mb-3">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-chart-pie text-primary me-2"></i>Attendance Overview</h5>
+                        <div class="display-4 text-center my-3">94%</div>
+                        <p class="text-center text-muted">Overall attendance rate</p>
+                        <div class="progress mt-2">
+                            <div class="progress-bar bg-success" style="width: 94%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-exclamation-triangle text-warning me-2"></i>Absence Alerts</h5>
+                        <p class="mt-3">You are approaching the absence limit in:</p>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                CS 101: Introduction to Programming
+                                <span class="badge bg-warning rounded-pill">2/3</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card dashboard-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-calendar-alt text-primary me-2"></i>Today's Schedule</h5>
+                        <ul class="list-group list-group-flush mt-3">
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <strong>09:00 - 10:30</strong>
+                                    <span class="badge bg-success">Present</span>
+                                </div>
+                                <div>MATH 201: Calculus II</div>
+                                <small class="text-muted">Room 302B</small>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <strong>11:00 - 12:30</strong>
+                                    <span class="badge bg-primary">Upcoming</span>
+                                </div>
+                                <div>PHY 101: Physics I</div>
+                                <small class="text-muted">Lab Room 105</small>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between">
+                                    <strong>14:00 - 15:30</strong>
+                                    <span class="badge bg-primary">Upcoming</span>
+                                </div>
+                                <div>CS 101: Introduction to Programming</div>
+                                <small class="text-muted">Computer Lab 2</small>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Recent Absence Reports</h5>
+                        <a href="#" class="btn btn-sm btn-outline-primary">View All</a>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item absence-item absence-approved">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-1">MATH 201: Calculus II</h6>
+                                <span class="badge bg-success">Approved</span>
+                            </div>
+                            <p class="mb-1 small">Medical appointment</p>
+                            <small class="text-muted">Feb 24, 2025</small>
+                        </div>
+                        <div class="list-group-item absence-item absence-pending">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-1">CS 101: Introduction to Programming</h6>
+                                <span class="badge bg-warning">Pending</span>
+                            </div>
+                            <p class="mb-1 small">Family emergency</p>
+                            <small class="text-muted">Feb 20, 2025</small>
+                        </div>
+                        <div class="list-group-item absence-item absence-rejected">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h6 class="mb-1">PHY 101: Physics I</h6>
+                                <span class="badge bg-danger">Rejected</span>
+                            </div>
+                            <p class="mb-1 small">Overslept</p>
+                            <small class="text-muted">Feb 15, 2025</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-plus-circle me-2"></i>Report New Absence
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary">
+                                <i class="fas fa-file-download me-2"></i>Download Attendance Record
+                            </a>
+                            <a href="#" class="btn btn-outline-secondary">
+                                <i class="fas fa-envelope me-2"></i>Contact Instructor
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-light py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 AttendTrack. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-decoration-none text-muted me-3">Privacy Policy</a>
+                    <a href="#" class="text-decoration-none text-muted me-3">Terms of Service</a>
+                    <a href="#" class="text-decoration-none text-muted">Help</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

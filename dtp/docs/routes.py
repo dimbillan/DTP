@@ -17,7 +17,6 @@ def get_real_ip():
 @docs.route('/docs', methods=['GET', 'POST'])
 @login_required
 def docs_list():
-
     lectures = Lecture.query.all()
 
     form_docs = DocsForm()
@@ -28,32 +27,28 @@ def docs_list():
 
     logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] belge sayfasinda.")
 
-    if form_docs.validate_on_submit():
-        docs_lecture = form_docs.docs_lecture.data
-        docs_file = form_docs.docs_file.data
+    if request.method == 'POST':
+        if 'docs_lecture_query' in request.form:  # Sorgu formu gönderildi
+            if form_docs_q.validate_on_submit():
+                docs_lecture = form_docs_q.docs_lecture_query.data
+                docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png')) and f.startswith(docs_lecture)]
+                logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {docs_lecture} numarali dersin belgelerini sorguladi.")
+                return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query=form_docs_q, docs=docs)
+        else:  # Dosya yükleme formu gönderildi
+            if form_docs.validate_on_submit():
+                docs_lecture = form_docs.docs_lecture.data
+                docs_file = form_docs.docs_file.data
+                timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                file_extension = os.path.splitext(docs_file.filename)[1]
+                new_filename = f"{docs_lecture}_{timestamp}{file_extension}"
+                docs_file.save(os.path.join("dtp/static/docs", new_filename))
+                logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_filename} adli {docs_lecture} numarali ders için belge yükledi.")
+                flash('Belge başarıyla yüklendi', 'success')
+                return redirect('/docs')
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-        file_extension = os.path.splitext(docs_file.filename)[1]
-        new_filename = f"{docs_lecture}_{timestamp}{file_extension}"
-
-        docs_file.save(os.path.join("dtp/static/docs", new_filename))
-
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_filename} adli {docs_lecture} numarali ders için belge yükledi.")
-        flash('Belge başariyla yüklendi', 'success')
-        
-        return redirect('/docs')
-    
-    if form_docs_q.validate_on_submit():
-        docs_lecture = form_docs_q.docs_lecture_query.data
-        docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png')) and f.startswith(docs_lecture)]
-
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {docs_lecture} numarali dersin belgelerini sorguladi.")
-
-        return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
-    
-    docs = [f for f in os.listdir("dtp/static/docs") if f.endswith(('.jpg', '.jpeg', '.png'))]
-    return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query = form_docs_q, docs=docs)
+    # Sayfa ilk yüklendiğinde boş liste gönder
+    docs = []
+    return render_template('students/docs.html', title='Belgeler', form_docs=form_docs, form_query=form_docs_q, docs=docs)
 
 @docs.route('/docs/delete/<string:filename>', methods=['GET', 'POST'])
 @login_required

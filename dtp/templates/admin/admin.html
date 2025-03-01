@@ -1,19 +1,25 @@
 {% extends "layout/base.html" %}
 {% block content %}
 <div class="content-section">
-    <h4 class="mb-4">Kontrol Paneli</h4>
+    <h2 class="admin-panel-title">
+        <i class="fas fa-cogs me-2"></i>Yönetim Paneli
+    </h2>
     <div class="list-group">
-        <a href="students" class="list-group-item list-group-item-action list-group-item-light">
-            <strong>Öğrenciler</strong>
+        <a href="students" class="admin-panel-item text-decoration-none">
+            <i class="fas fa-users"></i>
+            <span>Öğrenciler</span>
         </a>
-        <a href="announcement" class="list-group-item list-group-item-action list-group-item-light">
-            <strong>Duyurular</strong>
+        <a href="announcement" class="admin-panel-item text-decoration-none">
+            <i class="fas fa-bullhorn"></i>
+            <span>Duyurular</span>
         </a>
-        <a href="lectures" class="list-group-item list-group-item-action list-group-item-light">
-            <strong>Dersler</strong>
+        <a href="lectures" class="admin-panel-item text-decoration-none">
+            <i class="fas fa-book"></i>
+            <span>Dersler</span>
         </a>
-        <a href="logs" class="list-group-item list-group-item-action list-group-item-light">
-            <strong>Loglar</strong>
+        <a href="logs" class="admin-panel-item text-decoration-none">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Loglar</span>
         </a>
     </div>
 </div>

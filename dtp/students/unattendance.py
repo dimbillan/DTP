@@ -58,8 +58,10 @@ def unattendance():
         lecture_id = form_get.lecture.data
         unattendances = Unattendance.query.filter_by(student_id=current_user.id, lecture_id=lecture_id).all()
         
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {new_unattendance.lecture.name} dersi için devamsizliklarini sorguladi.") 
-
+        if unattendances:
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {unattendances[0].lecture.name} dersi için devamsizliklarini sorguladi.") 
+        else:
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{current_user.name}({current_user.id})] {lecture_id} dersi için devamsizlik yok.") 
     return render_template('students/unattendance.html', title='Devamsızlıklar', form_get=form_get, form_update= form_update, unattendances=unattendances)
 
 @students.route('/unattendance/delete/<int:id>', methods=['POST'])

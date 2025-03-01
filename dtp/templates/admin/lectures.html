@@ -1,19 +1,24 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-<div class="text-center mt-3">
-    <a href="{{ url_for('admin.add_lecture') }}" class="btn btn-outline-info d-block w-10">Ders Ekle</a>
-</div>
-<div class="container mt-4">
-    <h4 class="mb-3">Dersler</h4>
+<div class="content-section">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="admin-panel-title mb-0">
+            <i class="fas fa-book me-2"></i>Ders Yönetimi
+        </h2>
+        <a href="{{ url_for('admin.add_lecture') }}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Yeni Ders Ekle
+        </a>
+    </div>
+
     <div class="table-responsive">
-        <table class="table table-bordered table-striped text-center align-middle">
-            <thead class="table-light">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <th scope="col">Ders ID</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Ders Adı</th>
                     <th scope="col">Ders Kodu</th>
-                    <th scope="col">İşlem</th>
+                    <th scope="col" class="text-center">İşlem</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,16 +28,20 @@
                             <td>{{ lecture.id }}</td>
                             <td>{{ lecture.name }}</td>
                             <td>{{ lecture.code }}</td>
-                            <td>
-                                <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST">
-                                    <button type="submit" class="btn btn-danger btn-sm">Dersi Sil</button>
+                            <td class="text-center">
+                                <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash me-1"></i>Sil
+                                    </button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
                 {% else %}
                     <tr>
-                        <td colspan="4" class="text-muted text-center">Ders kaydı bulunamadı.</td>
+                        <td colspan="4" class="text-center text-muted py-4">
+                            <i class="fas fa-book-open me-2"></i>Ders kaydı bulunamadı
+                        </td>
                     </tr>
                 {% endif %}
             </tbody>

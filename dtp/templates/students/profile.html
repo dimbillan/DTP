@@ -1,27 +1,88 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="py-5">
-    <div class="container">
-        <div class="card shadow-sm p-4">
-            <h2 class="card-title mb-4 text-center">Öğrenci Bilgileri</h2>
-            <div class="row mb-3">
-                <div class="col-md-4 fw-bold">Öğrenci ID:</div>
-                <div class="col-md-8 text-break">{{ student.id }}</div>
+<div class="content-section">
+    <div class="profile-card">
+        <div class="profile-header">
+            <i class="fas fa-user-circle"></i>
+            <h2 class="mb-0">Öğrenci Profili</h2>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-item">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <span class="profile-label">
+                            <i class="fas fa-id-card me-2"></i>Öğrenci ID
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <span class="profile-value">{{ student.id }}</span>
+                    </div>
+                </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-md-4 fw-bold">Öğrenci E-Posta:</div>
-                <div class="col-md-8 text-break">{{ student.email }}</div>
+
+            <div class="profile-item">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <span class="profile-label">
+                            <i class="fas fa-envelope me-2"></i>E-Posta
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <span class="profile-value">{{ student.email }}</span>
+                    </div>
+                </div>
             </div>
-            <div class="row mb-3">
-                <div class="col-md-4 fw-bold">Öğrenci Adı:</div>
-                <div class="col-md-8 text-break">{{ student.name }}</div>
+
+            <div class="profile-item">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <span class="profile-label">
+                            <i class="fas fa-user me-2"></i>Ad Soyad
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <span class="profile-value">{{ student.name }}</span>
+                    </div>
+                </div>
             </div>
-            
-            <div class="row">
-                <div class="col-md-4 fw-bold">Rol:</div>
-                <div class="col-md-8">{% if student.is_admin > 1 %}{{ student.is_admin }}{% else %} Öğrenci {% endif %}</div>
+
+            <div class="profile-item">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <span class="profile-label">
+                            <i class="fas fa-user-tag me-2"></i>Rol
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        {% if student.is_admin == 999 %}
+                            <span class="profile-badge profile-badge-admin">
+                                Admin
+                            </span>
+                        {% elif student.is_admin >= 100 %}
+                            <span class="profile-badge profile-badge-admin">
+                                Yönetici
+                            </span>
+                        {% elif student.is_admin >= 50 %}
+                            <span class="profile-badge profile-badge-admin">
+                                Koordinatör
+                            </span>
+                        {% elif student.is_admin >= 20 %}
+                            <span class="profile-badge profile-badge-admin">
+                                Moderatör
+                            </span>
+                        {% elif student.is_admin >= 10 %}
+                            <span class="profile-badge profile-badge-admin">
+                                Editör
+                            </span>
+                        {% else %}
+                            <span class="profile-badge profile-badge-student">
+                                Öğrenci
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-            
         </div>
     </div>
 </div>

@@ -32,7 +32,7 @@ def new_announcement():
 
             flash(f"Duyuru {form_announcement.title.data} başlığıyla eklendi", "success")
 
-            return redirect(url_for('admin.new_announcement'))
+            return redirect(url_for('admin.announcement'))
         
         return render_template('admin/add_announcement.html', title = "Duyuru Ekle", form_announcement = form_announcement)
     
@@ -72,7 +72,7 @@ def delete_announcement(id):
 
             flash(f"{announcement.title} başlıklı duyuru kaldırıldı.", 'info')
 
-        return redirect(url_for('admin.new_announcement'))
+        return redirect(url_for('admin.announcement'))
     
     else:
         return redirect(url_for('main.home'))
