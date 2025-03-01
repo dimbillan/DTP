@@ -97,7 +97,7 @@
                     {% if current_user.is_authenticated %}
                         <tr>
                             <td colspan="3" class="text-center text-muted py-4">
-                                <i class="fas fa-info-circle me-2"></i>Devamsızlık kaydı bulunamadı.
+                                <i class="fas fa-info-circle me-2"></i>{% if form_get.lecture.data %}Devamsızlık kaydı bulunamadı.{% else %}Lütfen bir ders seçiniz.{% endif %}
                             </td>
                         </tr>
                     {% else %}
