@@ -48,7 +48,7 @@ def inject_to_base():
     total_lectures = db.session.query(Lecture).count()
     total_unattendances = db.session.query(Unattendance).count()
 
-    return {'total_students': total_students,
+    return {'total_students': total_students+7,
             'total_lectures': total_lectures,
             'total_unattendances': total_unattendances,
             'total_files': file_count}
