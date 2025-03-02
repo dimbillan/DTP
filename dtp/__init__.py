@@ -13,7 +13,7 @@ from dtp.logging_config import setup_logger
 app = Flask(__name__)
 
 app.config.from_object(Config)
-print(Config.MAIL_USERNAME)
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 migrate = Migrate(app, db)
