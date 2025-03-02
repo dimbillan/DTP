@@ -1,92 +1,96 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
-        <legend class="mb-0">
+<div class="profile-card">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-file-upload me-2"></i>Belge Yükleme
-        </legend>
+        </h3>
     </div>
-    
-    <div class="file-upload-info">
-        <i class="fas fa-info-circle me-2"></i>
-        <span>Lütfen sadece imza kağıtlarını yükleyiniz. Sadece JPG, JPEG ve PNG uzantılı belgeler kabul edilmektedir.</span>
-    </div>
+    <div class="profile-content">
+        <div class="file-upload-info mb-4">
+            <i class="fas fa-info-circle me-2"></i>
+            <span>Lütfen sadece imza kağıtlarını yükleyiniz. Sadece JPG, JPEG ve PNG uzantılı belgeler kabul edilmektedir.</span>
+        </div>
 
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form_docs.hidden_tag() }}
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="form-label">Belge Seçiniz</label>
-                    <label for="file-upload" class="form-control">Dosya Seç</label>
-                    {{ form_docs.docs_file(id="file-upload") }}
-                    {% if form_docs.docs_file.errors %}
-                        <div class="invalid-feedback d-block">
-                            {% for error in form_docs.docs_file.errors %}
-                                <span class="text-danger">{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form_docs.hidden_tag() }}
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="profile-info-item">
+                        <i class="fas fa-file"></i>
+                        <span class="profile-info-label">Belge Seçiniz</span>
+                        <label for="file-upload" class="form-control">Dosya Seç</label>
+                        {{ form_docs.docs_file(id="file-upload") }}
+                        {% if form_docs.docs_file.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form_docs.docs_file.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-info-item">
+                        <i class="fas fa-book"></i>
+                        <span class="profile-info-label">Dersi Seçiniz</span>
+                        {{ form_docs.docs_lecture(class="form-control") }}
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label class="form-label">Dersi Seçiniz</label>
-                    {{ form_docs.docs_lecture(class="form-control") }}
-                </div>
+            <div class="profile-actions">
+                {{ form_docs.submit(class="btn btn-primary profile-action-btn") }}
             </div>
-        </div>
-        <div class="mt-4">
-            {{ form_docs.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
-        <legend class="mb-0">
+<div class="profile-card mt-4">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-search me-2"></i>Belge Sorgulama
-        </legend>
+        </h3>
     </div>
-
-    <form method="POST" action="">
-        {{ form_query.hidden_tag() }}
-        <div class="form-group">
-            <label class="form-label">Ders Seçiniz</label>
-            {{ form_query.docs_lecture_query(class="form-control") }}
-            {% if form_query.docs_lecture_query.errors %}
-                <div class="invalid-feedback d-block">
-                    {% for error in form_query.docs_lecture_query.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div>
-        <div class="mt-3">
-            {{ form_query.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
+    <div class="profile-content">
+        <form method="POST" action="">
+            {{ form_query.hidden_tag() }}
+            <div class="profile-info-item">
+                <i class="fas fa-book"></i>
+                <span class="profile-info-label">Ders Seçiniz</span>
+                {{ form_query.docs_lecture_query(class="form-control") }}
+                {% if form_query.docs_lecture_query.errors %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in form_query.docs_lecture_query.errors %}
+                            <span class="text-danger">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="profile-actions">
+                {{ form_query.submit(class="btn btn-primary profile-action-btn") }}
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
-        <legend class="mb-0">
+<div class="profile-card mt-4">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-images me-2"></i>Yüklenen Belgeler
-        </legend>
+        </h3>
     </div>
-
-    <div class="row g-4">
-        {% if docs and form_query.docs_lecture_query.data %}
-            {% for doc in docs %}
-                <div class="col-lg-4 col-md-6">
-                    <div class="card h-100">
-                        <a href="{{ url_for('static', filename='docs/' + doc) }}" class="card-img-link">
-                            <img src="{{ url_for('static', filename='docs/' + doc) }}" 
-                                class="card-img-top" 
-                                alt="{{ doc }}">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title text-truncate mb-3">{{ doc }}</h5>
+    <div class="profile-content">
+        <div class="row g-4">
+            {% if docs and form_query.docs_lecture_query.data %}
+                {% for doc in docs %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="profile-info-item h-100">
+                            <a href="{{ url_for('static', filename='docs/' + doc) }}" class="card-img-link">
+                                <img src="{{ url_for('static', filename='docs/' + doc) }}" 
+                                    class="img-fluid rounded mb-3" 
+                                    alt="{{ doc }}">
+                            </a>
+                            <h5 class="text-truncate mb-3">{{ doc }}</h5>
                             <div class="d-flex gap-2 justify-content-center">
                                 <a href="{{ url_for('static', filename='docs/' + doc) }}" 
                                    download 
@@ -102,14 +106,14 @@
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="fas fa-folder-open fa-3x mb-3"></i>
+                    <h5>{% if form_query.docs_lecture_query.data %}Belge bulunamadı.{% else %}Lütfen bir ders seçiniz.{% endif %}</h5>
                 </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12 text-center text-muted py-5">
-                <i class="fas fa-folder-open fa-3x mb-3"></i>
-                <h5>{% if form_query.docs_lecture_query.data %}Belge bulunamadı.{% else %}Lütfen bir ders seçiniz.{% endif %}</h5>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

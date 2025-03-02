@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, SelectField, EmailField
-from wtforms.validators import Length, InputRequired, EqualTo, ValidationError, Email
+from wtforms.validators import Length, InputRequired, EqualTo, ValidationError, Email, DataRequired
 
 from dtp.models import Student, Lecture, Unattendance
 
@@ -34,23 +34,18 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Giriş Yap')
 
 class RequestResetForm(FlaskForm):
-    email = EmailField(validators=[InputRequired(), Email()], render_kw={"placeholder": "E-Posta"})
-
-    submit = SubmitField('Şifre sıfırlama isteği gönder')
+    email = StringField(validators=[DataRequired(), Email()], render_kw={"placeholder": "E-Posta"})
+    submit = SubmitField('Şifre Sıfırlama İsteği Gönder')
 
     def validate_email(self, email):
         student = Student.query.filter_by(email=email.data).first()
-        if not student:
-            raise ValidationError('Bu e-posta ile kayıtlı bir öğrenci bulunmamaktadır. Lütfen kontrol ediniz.')
-        
+        if student is None:
+            raise ValidationError('Bu e-posta adresi ile kayıtlı bir hesap bulunamadı.')
+
 class ResetPasswordForm(FlaskForm):
-        password = PasswordField(validators=[
-                             InputRequired(), Length(min=6, max=64)], render_kw={"placeholder": "Şifre"})
-    
-        confirm_password = PasswordField(validators=[
-                                InputRequired(), EqualTo('password')], render_kw={"placeholder": "Şifreyi Tekrar Yaz"})
-        
-        submit = SubmitField('Şifreyi sıfırla')
+    password = PasswordField(validators=[DataRequired(), Length(min=6)], render_kw={"placeholder": "Yeni Şifre"})
+    confirm_password = PasswordField(validators=[DataRequired(), EqualTo('password')], render_kw={"placeholder": "Yeni Şifreyi Onayla"})
+    submit = SubmitField('Şifreyi Sıfırla')
 
 class UpdateUnattendancesForm(FlaskForm):
     lecture = SelectField('Lecture', choices=[], validators=[InputRequired()])

@@ -13,80 +13,81 @@ Yetki Seviyeleri:
 -->
 
 
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="admin-panel-title mb-0">
+<div class="profile-card">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-users me-2"></i>Öğrenci Yönetimi
-        </h2>
+        </h3>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Ad Soyad</th>
-                    <th scope="col">E-Posta</th>
-                    <th scope="col" class="text-center">Yetki</th>
-                    <th scope="col" class="text-center">İşlem</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if students %}
-                    {% for student in students %}
-                        {% if student.id != current_user.id %}
-                            <tr>
-                                <td>{{ student.id }}</td>
-                                <td>{{ student.name }}</td>
-                                <td>{{ student.email }}</td>
-                                <td class="text-center">
-                                    {% if student.is_admin == 999 %}
-                                        <span class="profile-badge profile-badge-admin">
-                                            Admin - {{student.is_admin}}
-                                        </span>
-                                    {% elif student.is_admin >= 100 %}
-                                        <span class="profile-badge profile-badge-admin">
-                                            Yönetici - {{student.is_admin}}
-                                        </span>
-                                    {% elif student.is_admin >= 50 %}
-                                        <span class="profile-badge profile-badge-admin">
-                                            Koordinatör - {{student.is_admin}}
-                                        </span>
-                                    {% elif student.is_admin >= 20 %}
-                                        <span class="profile-badge profile-badge-admin">
-                                            Moderatör - {{student.is_admin}}
-                                        </span>
-                                    {% elif student.is_admin >= 10 %}
-                                        <span class="profile-badge profile-badge-admin">
-                                            Editör - {{student.is_admin}}
-                                        </span>
-                                    {% else %}
-                                        <span class="profile-badge profile-badge-student">
-                                            Öğrenci
-                                        </span>
-                                    {% endif %}
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        {% if current_user.is_admin >= 100 %}
-                                            <a href="{{ url_for('admin.change_perm', id=student.id) }}" class="btn btn-warning btn-sm">
-                                                <i class="fas fa-user-cog me-1"></i>Yetki
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
+    <div class="profile-content">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                        <td colspan="5" class="text-center text-muted py-4">
-                            <i class="fas fa-user-slash me-2"></i>Öğrenci kaydı bulunamadı
-                        </td>
+                        <th scope="col">ID</th>
+                        <th scope="col">Ad Soyad</th>
+                        <th scope="col">E-Posta</th>
+                        <th scope="col" class="text-center">Yetki</th>
+                        <th scope="col" class="text-center">İşlem</th>
                     </tr>
-                {% endif %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% if students %}
+                        {% for student in students %}
+                            {% if student.id != current_user.id %}
+                                <tr>
+                                    <td>{{ student.id }}</td>
+                                    <td>{{ student.name }}</td>
+                                    <td>{{ student.email }}</td>
+                                    <td class="text-center">
+                                        {% if student.is_admin == 999 %}
+                                            <span class="profile-badge profile-badge-admin">
+                                                <i class="fas fa-crown me-1"></i>Admin - {{student.is_admin}}
+                                            </span>
+                                        {% elif student.is_admin >= 100 %}
+                                            <span class="profile-badge profile-badge-admin">
+                                                <i class="fas fa-user-shield me-1"></i>Yönetici - {{student.is_admin}}
+                                            </span>
+                                        {% elif student.is_admin >= 50 %}
+                                            <span class="profile-badge profile-badge-admin">
+                                                <i class="fas fa-user-tie me-1"></i>Koordinatör - {{student.is_admin}}
+                                            </span>
+                                        {% elif student.is_admin >= 20 %}
+                                            <span class="profile-badge profile-badge-admin">
+                                                <i class="fas fa-user-cog me-1"></i>Moderatör - {{student.is_admin}}
+                                            </span>
+                                        {% elif student.is_admin >= 10 %}
+                                            <span class="profile-badge profile-badge-admin">
+                                                <i class="fas fa-user-edit me-1"></i>Editör - {{student.is_admin}}
+                                            </span>
+                                        {% else %}
+                                            <span class="profile-badge profile-badge-student">
+                                                <i class="fas fa-user-graduate me-1"></i>Öğrenci
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="d-flex justify-content-center gap-2">
+                                            {% if current_user.is_admin >= 100 %}
+                                                <a href="{{ url_for('admin.change_perm', id=student.id) }}" class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-user-cog me-1"></i>Yetki
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                <i class="fas fa-user-slash me-2"></i>Öğrenci kaydı bulunamadı
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock content %}

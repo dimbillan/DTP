@@ -2,76 +2,75 @@
 {% block content %}
 
 <div class="content-section">
-    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
-        <legend class="mb-0">
-            <i class="fas fa-list me-2"></i>Son Devamsızlıklar
-        </legend>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Ders Adı</th>
-                    <th scope="col">Hafta</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="profile-card">
+        <div class="profile-header">
+            <h3 class="profile-name mb-0">
+                <i class="fas fa-clock me-2"></i>Son Devamsızlıklar
+            </h3>
+        </div>
+        <div class="profile-content">
+            {% if current_user.is_authenticated %}
                 {% if unattendances %}
                     {% for unattendance in unattendances %}
-                        <tr>
-                            <td>{{ unattendance.lecture.name }}</td>
-                            <td>{{ unattendance.week_id }}. Hafta</td>
-                        </tr>
+                        <div class="profile-info-item">
+                            <i class="fas fa-book"></i>
+                            <span class="profile-info-label">{{ unattendance.lecture.name }}</span>
+                            <span class="profile-info-value">{{ unattendance.week_id }}. Hafta</span>
+                        </div>
                     {% endfor %}
                 {% else %}
-                    {% if current_user.is_authenticated %}
-                        <tr>
-                            <td colspan="2" class="text-center text-muted py-4">
-                                <i class="fas fa-info-circle me-2"></i>Devamsızlık kaydı bulunamadı.
-                            </td>
-                        </tr>
-                    {% else %}
-                        <tr>
-                            <td colspan="2" class="text-center text-muted py-4">
-                                <i class="fas fa-lock me-2"></i>Bunu görmek için lütfen giriş yapın.
-                            </td>
-                        </tr>
-                    {% endif %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                        <h5 class="text-muted">Devamsızlık Kaydınız Bulunmamaktadır</h5>
+                    </div>
                 {% endif %}
-            </tbody>
-        </table>
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-lock fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Devamsızlıkları görmek için lütfen giriş yapın</h5>
+                    <div class="mt-3">
+                        <a href="{{ url_for('students.login') }}" class="btn btn-primary profile-action-btn">
+                            <i class="fas fa-sign-in-alt"></i>Giriş Yap
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </div>
 
 <div class="content-section">
-    {% if announcements %}
-        {% for announce in announcements %}
-            <div class="card mb-4 shadow-sm">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-user-circle me-2 text-primary"></i>
-                        <h5 class="mb-0">{{ announce.author.name if announce.author.name else 'Silinmiş Kullanıcı' }}</h5>
-                    </div>
-                    <small class="text-muted">{{ announce.date_posted.strftime('%d/%m/%Y %H:%M:%S') }}</small>
-                </div>
-                <div class="card-body">
-                    <h4 class="card-title">
-                        <a href="#" class="text-decoration-none text-primary">{{ announce.title }}</a>
-                    </h4>
-                    <div class="card-text">
-                        <p class="lead">{{ announce.content }}</p>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="card text-center shadow-sm">
-            <div class="card-body py-5">
-                <i class="fas fa-inbox fa-3x me-2"></i>
-                <h5 class="card-title">Henüz Duyuru Yok</h5>
-            </div>
+    <div class="profile-card">
+        <div class="profile-header">
+            <h3 class="profile-name mb-0">
+                <i class="fas fa-bullhorn me-2"></i>Duyurular
+            </h3>
         </div>
-    {% endif %}
+        <div class="profile-content">
+            {% if announcements %}
+                {% for announce in announcements %}
+                    <div class="profile-info-item announcement-item">
+                        <div class="announcement-header w-100 d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-user-circle text-primary"></i>
+                                <span class="ms-2 fw-bold">{{ announce.author.name if announce.author.name else 'Silinmiş Kullanıcı' }}</span>
+                            </div>
+                            <small class="text-muted">{{ announce.date_posted.strftime('%d/%m/%Y %H:%M:%S') }}</small>
+                        </div>
+                        <div class="announcement-content w-100">
+                            <h4 class="announcement-title text-primary mb-2">{{ announce.title }}</h4>
+                            <p class="announcement-text mb-0">{{ announce.content }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Henüz Duyuru Bulunmamaktadır</h5>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

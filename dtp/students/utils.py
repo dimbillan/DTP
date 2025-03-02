@@ -1,14 +1,15 @@
-#from flask import url_for
-#from dtp.models import Student
-#from dtp import mail
-#from flask_mail import Message
-#def send_reset_email(student):
-#token = student.get_reset_token()
-#msg = Message('Şifre Yenileme İsteği', sender='noreply@devamsizliktakip.com', recipients=[student.email])
+from flask import url_for
+from flask_mail import Message
+from dtp import mail, app
 
-#msg.body = f"""Şifrenizi yenilemek için lütfen bu linke tıklayınız:
-#{url_for('students.reset_token', token=token, _external=True)}
+def send_reset_email(student):
+    token = student.get_reset_token()
+    msg = Message('Şifre Sıfırlama İsteği',
+                  sender=app.config['MAIL_USERNAME'],  # Kimlik doğrulaması yapılan Gmail adresi
+                  recipients=[student.email])
+    msg.body = f'''Şifrenizi sıfırlamak için aşağıdaki linke tıklayın:
+{url_for('students.reset_token', token=token, _external=True)}
 
-#Eğer bu isteği siz göndermediyseniz, lütfen bu e-postayı görmezden gelin.
-#"""
-#mail.send(msg)
+Bu e-postayı siz istemediyseniz, lütfen dikkate almayın.
+'''
+    mail.send(msg) 

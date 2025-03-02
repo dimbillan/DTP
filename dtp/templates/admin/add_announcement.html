@@ -1,13 +1,17 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form_announcement.hidden_tag() }}
-        <fieldset class="mb-3">
-            <legend class="border-bottom mb-4">Duyuru Ekle</legend>
-
-            <div class="mb-3">
-                <label for="title" class="form-label">Duyuru Başlığı</label>
+<div class="profile-card">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
+            <i class="fas fa-plus-circle me-2"></i>Yeni Duyuru Ekle
+        </h3>
+    </div>
+    <div class="profile-content">
+        <form method="POST" action="">
+            {{ form_announcement.hidden_tag() }}
+            <div class="profile-info-item">
+                <i class="fas fa-heading"></i>
+                <span class="profile-info-label">Duyuru Başlığı</span>
                 {% if form_announcement.title.errors %}
                     {{ form_announcement.title(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
@@ -20,15 +24,16 @@
                 {% endif %}
             </div>
 
-            <div class="mb-3">
-                <label for="content" class="form-label">Duyuru İçeriği</label>
+            <div class="profile-info-item">
+                <i class="fas fa-align-left"></i>
+                <span class="profile-info-label">Duyuru İçeriği</span>
                 {{ form_announcement.content(class="form-control", rows=5) }}
             </div>
-        </fieldset>
 
-        <div class="d-grid">
-            {{ form_announcement.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
+            <div class="profile-actions">
+                {{ form_announcement.submit(class="btn btn-primary profile-action-btn") }}
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock content %}

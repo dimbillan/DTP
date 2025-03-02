@@ -1,26 +1,42 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section">
-    <h2 class="admin-panel-title">
-        <i class="fas fa-cogs me-2"></i>Yönetim Paneli
-    </h2>
-    <div class="list-group">
-        <a href="students" class="admin-panel-item">
-            <i class="fas fa-users me-2"></i>
-            <span>Öğrenciler</span>
-        </a>
-        <a href="announcement" class="admin-panel-item">
-            <i class="fas fa-bullhorn me-2"></i>
-            <span>Duyurular</span>
-        </a>
-        <a href="lectures" class="admin-panel-item">
-            <i class="fas fa-book me-2"></i>
-            <span>Dersler</span>
-        </a>
-        <a href="logs" class="admin-panel-item">
-            <i class="fas fa-clipboard-list me-2"></i>
-            <span>Loglar</span>
-        </a>
+<div class="profile-card">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
+            <i class="fas fa-cogs me-2"></i>Yönetim Paneli
+        </h3>
+    </div>
+    <div class="profile-content">
+        <div class="row g-4">
+            <div class="col-md-6">
+                <a href="students" class="profile-info-item text-decoration-none">
+                    <i class="fas fa-users"></i>
+                    <span class="profile-info-label">Öğrenciler</span>
+                    <i class="fas fa-chevron-right ms-auto"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="announcement" class="profile-info-item text-decoration-none">
+                    <i class="fas fa-bullhorn"></i>
+                    <span class="profile-info-label">Duyurular</span>
+                    <i class="fas fa-chevron-right ms-auto"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="lectures" class="profile-info-item text-decoration-none">
+                    <i class="fas fa-book"></i>
+                    <span class="profile-info-label">Dersler</span>
+                    <i class="fas fa-chevron-right ms-auto"></i>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="logs" class="profile-info-item text-decoration-none">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span class="profile-info-label">Loglar</span>
+                    <i class="fas fa-chevron-right ms-auto"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}

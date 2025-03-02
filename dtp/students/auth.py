@@ -3,7 +3,8 @@ from flask_login import current_user, login_user, login_required, logout_user
 
 from dtp import db, bcrypt, logger
 from dtp.models import Student
-from dtp.students.forms import LoginForm, RegisterForm
+from dtp.students.forms import LoginForm, RegisterForm, RequestResetForm, ResetPasswordForm
+from dtp.students.utils import send_reset_email
 
 from . import students
 
@@ -67,29 +68,35 @@ def logout():
 
 @students.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
-    return render_template('auth/reset_request.html')
-
-
-#    if form.validate_on_submit():
-#        student = Student.query.filter_by(email=form.email.data).first()
-#        send_reset_email(student)
-#        flash("Şifre sıfırlama linki gönderildi", "info")
-#        return redirect(url_for("login"))
-
-#   return render_template('auth/reset_request.html', title='Şifreni Sıfırla', form=form)
-
-#@students.route("/reset_password/<token>", methods=['GET', 'POST'])
-#def reset_token(token):
-#    student = Student.verify_reset_token(token)
-#    if not student:
-#        flash('Şifre sıfırlama linki geçersiz. Muhtemelen süresi dolmuş', 'danger')
-#        return redirect(url_for('students.reset_request'))
     
-#    form = ResetPasswordForm()
-#    if form.validate_on_submit():
-#            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8') 
-#            student.password = hashed_password
-#            db.session.commit()
-#            flash('Şifreniz başarıyla değiştirildi.', 'success')
-#            return redirect(url_for('students.login'))
-#    return render_template('auth/reset_token.html', title='Şifreni Sıfırla', form=form)
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        student = Student.query.filter_by(email=form.email.data).first()
+        send_reset_email(student)
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] şifre sıfırlama e-postası gönderildi.")
+        flash('Şifre sıfırlama talimatları e-posta adresinize gönderildi.', 'info')
+        return redirect(url_for('students.login'))
+    
+    return render_template('auth/reset_request.html', title='Şifre Sıfırlama', form=form)
+
+@students.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    
+    student = Student.verify_reset_token(token)
+    if student is None:
+        logger.warning(f"{request.method} - [IP: {g.real_ip}] - Geçersiz veya süresi dolmuş token ile şifre sıfırlama denemesi.")
+        flash('Geçersiz ya da süresi dolmuş token.', 'warning')
+        return redirect(url_for('students.reset_request'))
+    
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        student.password = hashed_password
+        db.session.commit()
+        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{student.email}({student.id})] şifresini başarıyla sıfırladı.")
+        flash('Şifreniz başarıyla güncellendi! Artık giriş yapabilirsiniz.', 'success')
+        return redirect(url_for('students.login'))
+    
+    return render_template('auth/reset_token.html', title='Şifre Sıfırlama', form=form)

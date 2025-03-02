@@ -1,8 +1,9 @@
 from datetime import datetime
 import pytz 
-from dtp import db, login_manager
+from dtp import db, login_manager, app
 from sqlalchemy import event
 from flask_login import UserMixin
+from itsdangerous import URLSafeTimedSerializer as Serializer
 
 @login_manager.user_loader
 def load_user(student_id):
@@ -14,6 +15,19 @@ class Student(db.Model, UserMixin):
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Integer, nullable=False, default=1)
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'])
+        return s.dumps({'user_id': self.id})
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return Student.query.get(user_id)
 
     def __repr__(self):
         return f"Student ('{self.email}', '{self.name}', '{self.is_admin}')"

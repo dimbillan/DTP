@@ -1,16 +1,19 @@
 {% extends "layout/base.html" %}
 {% block content %}
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form_update.hidden_tag() }}
-        <fieldset class="mb-4">
-            <legend class="border-bottom mb-4">
-                <i class="fas fa-plus-circle me-2"></i>Devamsızlık Ekle
-            </legend>
+<div class="profile-card">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
+            <i class="fas fa-plus-circle me-2"></i>Devamsızlık Ekle
+        </h3>
+    </div>
+    <div class="profile-content">
+        <form method="POST" action="">
+            {{ form_update.hidden_tag() }}
             <div class="row g-3">
                 <div class="col-md-8">
-                    <div class="form-group">
-                        <label class="form-label">Ders</label>
+                    <div class="profile-info-item">
+                        <i class="fas fa-book"></i>
+                        <span class="profile-info-label">Ders</span>
                         {% if form_update.lecture.errors %}
                             {{ form_update.lecture(class="form-control is-invalid") }}
                             <div class="invalid-feedback">
@@ -24,27 +27,32 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Hafta</label>
+                    <div class="profile-info-item">
+                        <i class="fas fa-calendar-week"></i>
+                        <span class="profile-info-label">Hafta</span>
                         {{ form_update.week(class="form-control") }}    
                     </div>
                 </div>
             </div>
-        </fieldset>
-        <div class="d-flex gap-2">
-            {{ form_update.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
+            <div class="profile-actions">
+                {{ form_update.submit(class="btn btn-primary profile-action-btn") }}
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="content-section">
-    <form method="POST" action="">
-        {{ form_get.hidden_tag() }}
-        <fieldset class="mb-4">
-            <legend class="border-bottom mb-4">
-                <i class="fas fa-search me-2"></i>Devamsızlık Sorgula
-            </legend>
-            <div class="form-group">
+<div class="profile-card mt-4">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
+            <i class="fas fa-search me-2"></i>Devamsızlık Sorgula
+        </h3>
+    </div>
+    <div class="profile-content">
+        <form method="POST" action="">
+            {{ form_get.hidden_tag() }}
+            <div class="profile-info-item">
+                <i class="fas fa-book"></i>
+                <span class="profile-info-label">Ders</span>
                 {% if form_get.lecture.errors %}
                     {{ form_get.lecture(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
@@ -56,60 +64,62 @@
                     {{ form_get.lecture(class="form-control") }}
                 {% endif %}
             </div>
-        </fieldset>
-        <div class="d-flex gap-2">
-            {{ form_get.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
+            <div class="profile-actions">
+                {{ form_get.submit(class="btn btn-primary profile-action-btn") }}
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center border-bottom mb-4">
-        <legend class="mb-0">
+<div class="profile-card mt-4">
+    <div class="profile-header">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-list me-2"></i>Devamsızlık Listesi
-        </legend>
+        </h3>
     </div>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Ders Adı</th>
-                    <th scope="col">Hafta</th>
-                    <th scope="col" class="text-center">İşlem</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if unattendances %}
-                    {% for unattendance in unattendances %}
-                        <tr>
-                            <td>{{ unattendance.lecture.name }}</td>
-                            <td>{{ unattendance.week_id }}. Hafta</td>
-                            <td class="text-center">
-                                <form action="{{ url_for('students.delete_unattendance', id=unattendance.id) }}" method="POST" class="d-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash me-1"></i>Sil
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                {% else %}
-                    {% if current_user.is_authenticated %}
-                        <tr>
-                            <td colspan="3" class="text-center text-muted py-4">
-                                <i class="fas fa-info-circle me-2"></i>{% if form_get.lecture.data %}Devamsızlık kaydı bulunamadı.{% else %}Lütfen bir ders seçiniz.{% endif %}
-                            </td>
-                        </tr>
+    <div class="profile-content">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Ders Adı</th>
+                        <th scope="col">Hafta</th>
+                        <th scope="col" class="text-center">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if unattendances %}
+                        {% for unattendance in unattendances %}
+                            <tr>
+                                <td>{{ unattendance.lecture.name }}</td>
+                                <td>{{ unattendance.week_id }}. Hafta</td>
+                                <td class="text-center">
+                                    <form action="{{ url_for('students.delete_unattendance', id=unattendance.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash me-1"></i>Sil
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
                     {% else %}
-                        <tr>
-                            <td colspan="3" class="text-center text-muted py-4">
-                                <i class="fas fa-lock me-2"></i>Bunu görmek için lütfen giriş yapın.
-                            </td>
-                        </tr>
+                        {% if current_user.is_authenticated %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-4">
+                                    <i class="fas fa-info-circle me-2"></i>{% if form_get.lecture.data %}Devamsızlık kaydı bulunamadı.{% else %}Lütfen bir ders seçiniz.{% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-4">
+                                    <i class="fas fa-lock me-2"></i>Bunu görmek için lütfen giriş yapın.
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock content %}

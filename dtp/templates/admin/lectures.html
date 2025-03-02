@@ -1,51 +1,52 @@
 {% extends "layout/base.html" %}
 
 {% block content %}
-<div class="content-section">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="admin-panel-title mb-0">
+<div class="profile-card">
+    <div class="profile-header d-flex justify-content-between align-items-center">
+        <h3 class="profile-name mb-0">
             <i class="fas fa-book me-2"></i>Ders Yönetimi
-        </h2>
-        <a href="{{ url_for('admin.add_lecture') }}" class="btn btn-primary">
+        </h3>
+        <a href="{{ url_for('admin.add_lecture') }}" class="btn btn-primary btn-sm">
             <i class="fas fa-plus me-2"></i>Yeni Ders Ekle
         </a>
     </div>
-
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Ders Adı</th>
-                    <th scope="col">Ders Kodu</th>
-                    <th scope="col" class="text-center">İşlem</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% if lectures %}
-                    {% for lecture in lectures %}
+    <div class="profile-content">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Ders Adı</th>
+                        <th scope="col">Ders Kodu</th>
+                        <th scope="col" class="text-center">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if lectures %}
+                        {% for lecture in lectures %}
+                            <tr>
+                                <td>{{ lecture.id }}</td>
+                                <td>{{ lecture.name }}</td>
+                                <td>{{ lecture.code }}</td>
+                                <td class="text-center">
+                                    <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash me-1"></i>Sil
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td>{{ lecture.id }}</td>
-                            <td>{{ lecture.name }}</td>
-                            <td>{{ lecture.code }}</td>
-                            <td class="text-center">
-                                <form action="{{ url_for('admin.delete_lecture', id=lecture.id) }}" method="POST" class="d-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash me-1"></i>Sil
-                                    </button>
-                                </form>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                <i class="fas fa-book-open me-2"></i>Ders kaydı bulunamadı
                             </td>
                         </tr>
-                    {% endfor %}
-                {% else %}
-                    <tr>
-                        <td colspan="4" class="text-center text-muted py-4">
-                            <i class="fas fa-book-open me-2"></i>Ders kaydı bulunamadı
-                        </td>
-                    </tr>
-                {% endif %}
-            </tbody>
-        </table>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
