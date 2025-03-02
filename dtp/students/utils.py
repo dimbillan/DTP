@@ -8,7 +8,7 @@ def send_reset_email(student):
                   sender=app.config['MAIL_USERNAME'],  # Kimlik doğrulaması yapılan Gmail adresi
                   recipients=[student.email])
     msg.body = f'''Şifrenizi sıfırlamak için aşağıdaki linke tıklayın:
-{url_for('students.reset_token', token=token, _external=True)}
+{url_for('students.reset_token', token=token, _external=True, _scheme='https')}
 
 Bu e-postayı siz istemediyseniz, lütfen dikkate almayın.
 '''
