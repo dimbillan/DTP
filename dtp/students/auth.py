@@ -81,8 +81,6 @@ def reset_request():
 
 @students.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
-    if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
     
     student = Student.verify_reset_token(token)
     if student is None:
