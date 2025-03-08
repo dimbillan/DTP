@@ -8,12 +8,12 @@ from dtp.models import Student
 
 def send_reset_email(student):
     token = student.get_reset_token()
+
     current_time = datetime.now().strftime("%d/%m/%Y %H:%M")
     
-    # Gönderen e-posta adresini doğru formatta oluştur
-    sender_email = Email(app.config['MAIL_DEFAULT_SENDER'])
-    # Alıcı e-posta adresini doğru formatta oluştur
-    to_email = To(student.email)
+    sender_email = app.config['MAIL_DEFAULT_SENDER']
+
+    to_email = student.email
     
     # HTML içeriğini oluştur
     html_content = HtmlContent(f"""Sayın {student.name},<br><br>
