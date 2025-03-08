@@ -1,19 +1,35 @@
-import sendgrid
 import os
-from sendgrid.helpers.mail import Mail, Email, To, Content
+from datetime import datetime
+from flask import url_for
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Email, Content, To
+
 def send_reset_email(student):
     token = student.get_reset_token()
-    sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
-    from_email = Email(os.environ.get('MAIL_DEFAULT_SENDER'))
-    to_email = To(f"{student.email}")
-    subject = "Şifre Sıfırlama İsteği"
-    content = Content(f"text/plain", "Lütfen bağlantıya tıklayarak şifrenizi sıfırlayın: https://www.devamsizliktakip.info.tr/reset-password/{token}")
-    mail = Mail(from_email, to_email, subject, content)
+    current_time = datetime.now().strftime("%d/%m/%Y %H:%M")
+    
+    message = Mail(
+        from_email=Email(os.environ.get('MAIL_DEFAULT_SENDER')),
+        to_emails=To(student.email),
+        subject='Şifre Sıfırlama İsteği',
+        html_content=Content('text/html', f"""Sayın {student.name},<br><br>
 
-    # Get a JSON-ready representation of the Mail object
-    mail_json = mail.get()
-    print(student)
-    # Send an HTTP POST request to /mail/send
-    response = sg.client.mail.send.post(request_body=mail_json)
-    print(response.status_code)
-    print(response.headers)
+{current_time} tarihinde hesabınız için şifre sıfırlama talebinde bulundunuz.<br>
+Şifrenizi sıfırlamak için aşağıdaki linke tıklayın:<br><br>
+
+<a href="{url_for('students.reset_token', token=token, _external=True, _scheme='https')}">Şifremi Sıfırla</a><br><br>
+
+Bu link 30 dakika süreyle geçerlidir.<br><br>
+
+Bu e-postayı siz istemediyseniz, lütfen dikkate almayın.<br><br>
+
+İyi günler dileriz,<br>
+Devamsızlık Takip Sistemi"""))
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.headers)
+    except Exception as e:
+        print(f"E-posta gönderilirken hata oluştu: {str(e)}")
