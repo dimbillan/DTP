@@ -11,9 +11,9 @@ def send_reset_email(student):
 
     current_time = datetime.now().strftime("%d/%m/%Y %H:%M")
     
-    sender_email = app.config['MAIL_DEFAULT_SENDER']
+    sender_email = Email(app.config['MAIL_DEFAULT_SENDER'])
 
-    to_email = student.email
+    to_email = To(student.email)
     
     # HTML içeriğini oluştur
     html_content = HtmlContent(f"""Sayın {student.name},<br><br>
@@ -48,7 +48,8 @@ Devamsızlık Takip Sistemi""")
         sg = SendGridAPIClient(api_key)
         sg.client.session.verify = "etc/letsencrypt/live/devamsizliktakip.info.tr/fullchain.pem"
         
-        response = sg.send(message)
+        message_json = message.get()
+        response = sg.client.mail.send.post(request_body=message_json)
         print(f"SendGrid yanıt kodu: {response.status_code}")
         
         if response.status_code != 202:
