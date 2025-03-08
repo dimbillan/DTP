@@ -16,7 +16,7 @@ def send_reset_email(student):
     to_email = To(student.email)
     
     # HTML içeriğini oluştur
-    content = Content("text/html", f"Sayın {student.name},<br><br>{current_time} tarihinde hesabınız için şifre sıfırlama talebinde bulundunuz.<br>Şifrenizi sıfırlamak için aşağıdaki linke tıklayın:<br><br><a href='https://devamsizliktakip.info.tr/reset_password/{token}'>Şifremi Sıfırla</a><br><br>Bu link 30 dakika süreyle geçerlidir.<br><br>Bu e-postayı siz istemediyseniz, lütfen dikkate almayın.<br><br>İyi günler dileriz,<br>Devamsızlık Takip Sistemi")
+    content = Content("text/plain", f"sa")
     try:
         # API anahtarını kontrol et
         api_key = os.environ.get('SENDGRID_API_KEY')
