@@ -15,7 +15,7 @@ def send_reset_email(student):
     to_email = To(student.email)
     
     # Basit text içeriği
-    text_content = "Merhaba! Bu bir test e-postasıdır."
+    text_content = Content("text/plain", "Merhaba! Bu bir test e-postasıdır.")
     
     try:
         # API anahtarını kontrol et
