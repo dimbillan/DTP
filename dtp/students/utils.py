@@ -30,7 +30,7 @@ Devamsızlık Takip Sistemi"""
     
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-        sg.client.session.verify = False  # SSL doğrulamasını geçici olarak devre dışı bırak
+        sg.client.session.verify = "etc/letsencrypt/live/devamsizliktakip.info.tr/fullchain.pem"  # SSL doğrulamasını geçici olarak devre dışı bırak
         
         response = sg.send(message)
         if response.status_code != 202:  # SendGrid başarılı gönderimde 202 döner
