@@ -15,7 +15,7 @@ def send_reset_email(student):
     to_email = To(student.email)
     
     # HTML içeriğini oluştur
-    html_content = HtmlContent(f"""
+    html_content = f"""
     <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -35,7 +35,7 @@ def send_reset_email(student):
             </div>
         </body>
     </html>
-    """)
+    """
     
     try:
         # API anahtarını kontrol et
