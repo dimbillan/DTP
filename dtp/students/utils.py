@@ -37,7 +37,7 @@ def send_reset_email(student):
         sg = SendGridAPIClient(api_key)
         sg.client.session.verify = "etc/letsencrypt/live/devamsizliktakip.info.tr/fullchain.pem"
         
-        response = sg.send(message)
+        response = sg.send(message.get())
         
         if response.status_code != 202:
             error_body = response.body.decode() if response.body else "Hata detayı yok"
