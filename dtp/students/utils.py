@@ -28,7 +28,7 @@ def send_reset_email(student):
             from_email=sender_email,
             to_emails=to_email,
             subject='Şifre Sıfırlama İsteği',
-            content=content
+            html_content=content
         )
         
         # Debug için mesaj içeriğini yazdır
