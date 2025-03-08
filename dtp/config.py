@@ -8,11 +8,15 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
     
     # Mail ayarları
-    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_DEFAULT_SENDER = ('Devamsızlık Takip Sistemi', 'support@devamsizliktakip.info.tr')
+    MAIL_SERVER = 'smtp.sendgrid.net'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get('EMAIL_USER')
-    MAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+    MAIL_USE_SSL = False
+    MAIL_USERNAME = os.environ.get('EMAIL_USER')  # SendGrid için sabit değer
+    MAIL_PASSWORD = os.environ.get('SENDGRID_API_KEY')  # SendGrid API anahtarı
+    MAIL_MAX_EMAILS = 100  # SendGrid ücretsiz limit
+    MAIL_ASCII_ATTACHMENTS = False  # Türkçe karakter desteği
     
     # Uygulama URL ayarları
     SERVER_NAME = os.environ.get('SERVER_NAME', 'devamsizliktakip.info.tr')
