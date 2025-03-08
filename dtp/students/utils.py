@@ -31,5 +31,13 @@ Devamsızlık Takip Sistemi"""))
         response = sg.send(message)
         print(response.status_code)
         print(response.headers)
+        if response.status_code >= 200 and response.status_code < 300:
+            return True
+        else:
+            return False
+            
     except Exception as e:
         print(f"E-posta gönderilirken hata oluştu: {str(e)}")
+        return False
+
+    

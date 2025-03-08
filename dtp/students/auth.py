@@ -72,10 +72,14 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         student = Student.query.filter_by(email=form.email.data).first()
-        send_reset_email(student)
-        logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] şifre sıfırlama e-postası gönderildi.")
-        flash('Şifre sıfırlama talimatları e-posta adresinize gönderildi. Eğer e-posta adresinize gelmediyse lütfen spam klasörünü kontrol edin.', 'info')
-        return redirect(url_for('students.login'))
+        if send_reset_email(student):
+            logger.info(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] şifre sıfırlama e-postası gönderildi.")
+            flash('Şifre sıfırlama talimatları e-posta adresinize gönderildi. Eğer e-posta adresinize gelmediyse lütfen spam klasörünü kontrol edin.', 'info')
+            return redirect(url_for('students.login'))
+        else:
+            logger.warning(f"{request.method} - [IP: {g.real_ip}] - [{form.email.data}] şifre sıfırlama e-postası gönderilirken hata oluştu.")
+            flash('Şifre sıfırlama talimatları e-posta adresinize gönderilirken hata oluştu. Lütfen daha sonra tekrar deneyiniz.', 'danger')
+            return redirect(url_for('students.login'))
     
     return render_template('auth/reset_request.html', title='Şifre Sıfırlama', form=form)
 
