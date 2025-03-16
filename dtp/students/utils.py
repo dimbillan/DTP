@@ -28,6 +28,7 @@ Devamsızlık Takip Sistemi"""))
 
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        sg.client.session.verify = 'etc/letsencrypt/live/devamsizliktakip.info.tr/fullchain.pem'
         response = sg.send(message)
         print(response.status_code)
         print(response.headers)
